@@ -1,19 +1,23 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'where' => ['locale' => '[a-zA-Z]{2}'],
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
 
-Route::get('/dashboard', function () {
-    return view('admin.index');
-});
+], function () {
 
-Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-    /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
-    Route::get('/', function () {
-        dd(LaravelLocalization::setLocale());
+    Route::group([
+        'prefix' => 'dashboard',
+        'as' => 'dashboard.'
+
+    ], function () {
+        Route::get('/', function () {
+            return view('admin.index');
+        });
     });
 });
