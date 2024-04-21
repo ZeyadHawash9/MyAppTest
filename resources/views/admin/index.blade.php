@@ -501,7 +501,16 @@
                                 <div class="mb-10">
                                     <!--begin::Title-->
                                     <div class="fs-2hx fw-bold text-gray-800 text-center mb-13">
+                                        <div class="col-md-9">
+                                            <!--begin::Switch-->
+                                            <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                                                <input class="form-check-input h-30px w-50px" name="autotimezone" type="checkbox" value="" id="autotimezone" />
+                                                <label class="form-check-label" for="autotimezone">GMT +10:00</label>
+                                            </div>
+                                            <!--begin::Switch-->
+                                        </div>
                                         <span class="me-2">Try our all new Enviroment with
+
                                             <br />
                                             <span
                                                 class="position-relative d-inline-block text-danger">

@@ -4814,7 +4814,7 @@
                                             <div class="mb-0 me-2">
                                                 <a href="#"
                                                     class="fs-6 text-gray-800 text-hover-primary fw-bold">Banner
-                                                    Assets</a>
+                                                    /Admin</a>
                                                 <div class="text-gray-400 fs-7">Collection of banner
                                                     images</div>
                                             </div>
@@ -4853,7 +4853,7 @@
                                             <div class="mb-0 me-2">
                                                 <a href="#"
                                                     class="fs-6 text-gray-800 text-hover-primary fw-bold">Icon
-                                                    Assets</a>
+                                                    /Admin</a>
                                                 <div class="text-gray-400 fs-7">Collection of SVG icons
                                                 </div>
                                             </div>
