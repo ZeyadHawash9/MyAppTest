@@ -13,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         using: function () {
-
+            Route::prefix('/')
+            ->group(base_path('routes/web.php'));
             Route::prefix(LaravelLocalization::setLocale().'/dashboard')
                 ->name('dashboard.')
                 ->group(base_path('routes/admin.php'));
@@ -28,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
             'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
             'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
-            
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
