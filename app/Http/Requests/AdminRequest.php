@@ -22,13 +22,13 @@ class AdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-          'avatar' => 'image|mimes:png,jpg,jpeg|max:2048', // Validate image file
+            'image' => 'image|mimes:png,jpg,jpeg|max:2048', // Validate image file
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
+            'user_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
-            'user_email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:admins,email',
             'password' => 'required|string|min:8', // Adjust minimum password length as needed
-      
+
         ];
     }
      /**
@@ -39,24 +39,24 @@ class AdminRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'avatar.image' => 'The :attribute must be an image.',
-            'avatar.mimes' => 'The :attribute must be a file of type: :values.',
-            'avatar.max' => 'The :attribute may not be greater than :max kilobytes.',
-            'name.required' => 'The :attribute field is required.',
-            'name.string' => 'The :attribute must be a string.',
-            'name.max' => 'The :attribute may not be greater than :max characters.',
-            'username.required' => 'The :attribute field is required.',
-            'username.string' => 'The :attribute must be a string.',
-            'username.max' => 'The :attribute may not be greater than :max characters.',
-            'phone_number.required' => 'The :attribute field is required.',
-            'phone_number.string' => 'The :attribute must be a string.',
-            'phone_number.max' => 'The :attribute may not be greater than :max characters.',
-            'user_email.required' => 'The :attribute field is required.',
-            'user_email.email' => 'The :attribute must be a valid email address.',
-            'user_email.unique' => 'The :attribute has already been taken.',
-            'password.required' => 'The :attribute field is required.',
-            'password.string' => 'The :attribute must be a string.',
-            'password.min' => 'The :attribute must be at least :min characters.',
+            'avatar.image' => 'The avatar must be an image.',
+            'avatar.mimes' => 'The avatar must be a file of type: :values.',
+            'avatar.max' => 'The avatar may not be greater than :max kilobytes.',
+            'name.required' => 'The name field is required.',
+            'name.string' => 'The name must be a string.',
+            'name.max' => 'The name may not be greater than :max characters.',
+            'username.required' => 'The username field is required.',
+            'username.string' => 'The username must be a string.',
+            'username.max' => 'The username may not be greater than :max characters.',
+            'phone_number.required' => 'The phone number field is required.',
+            'phone_number.string' => 'The phone number must be a string.',
+            'phone_number.max' => 'The phone number may not be greater than :max characters.',
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.unique' => 'The email has already been taken.',
+            'password.required' => 'The password field is required.',
+            'password.string' => 'The password must be a string.',
+            'password.min' => 'The password must be at least :min characters.',
         ];
     }
 }

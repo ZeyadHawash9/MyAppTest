@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         using: function () {
             Route::prefix('/')
             ->group(base_path('routes/web.php'));
-            Route::prefix(LaravelLocalization::setLocale().'/dashboard')
+            Route::middleware('web')->prefix(LaravelLocalization::setLocale().'/dashboard')
                 ->name('dashboard.')
                 ->group(base_path('routes/admin.php'));
         },
