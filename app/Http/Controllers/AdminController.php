@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class AdminController extends Controller
 {
@@ -13,9 +14,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-       $admins=Admin::all();
+        $admins = Admin::all();
 
-       return view('admin.admin.index',compact('admins'));
+        return view('admin.admin.index', compact('admins'));
     }
 
     /**
@@ -24,6 +25,7 @@ class AdminController extends Controller
     public function create()
     {
 
+        return view('admin.admin.create');
     }
 
     /**
@@ -32,16 +34,31 @@ class AdminController extends Controller
     public function store(AdminRequest $request)
     {
 
-        return redirect()->route('admin.ew')->with('success', 'Admin created successfully!');
 
+        $admin = Admin::create([
+            'name' => $request->input('name'),
+            'user_name' => $request->input('user_name'),
+            'phone_number' => $request->input('phone_number'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'image' => $request->hasFile('image') ? $request->file('image')->store('uploads', 'public') : null,
+        ]);
+        return redirect()->route('dashboard.admins.index')->with('success', 'Admin created successfully!');
     }
 
+    public function changeStatus(string $id)
+    {
+
+        $admin = Admin::find($id);
+        $admin->is_active = $admin->is_active ==  1  ? 0 : 1;
+        $admin->save();
+        return response()->json(['message' => 'Admin status updated successfully'], 200);
+    }
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
@@ -49,7 +66,10 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $admin = Admin::FindOrFail($id);
+
+        $data = ['admin' => $admin];
+        return view('admin.admin.create', $data);
     }
 
     /**
@@ -57,7 +77,19 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $admin = Admin::FindOrFail($id);
+        $admin->fill([
+            'name' => $request->input('name'),
+            'user_name' => $request->input('user_name'),
+            'phone_number' => $request->input('phone_number'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'image' => $request->hasFile('image') ? $request->file('image')->store('uploads', 'public') : null,
+        ]);
+        $admin->save();
+        return redirect()->route('dashboard.admins.index')->with('success', 'Admin update successfully!');
+
     }
 
     /**
@@ -65,6 +97,8 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        Admin::destroy($id);
+        return redirect()->route('dashboard.admins.index')->with('success', 'Admin Destroy successfully!');
     }
 }

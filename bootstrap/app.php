@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         using: function () {
             Route::prefix('/')
             ->group(base_path('routes/web.php'));
-            Route::prefix(LaravelLocalization::setLocale().'/dashboard')
+            Route::middleware('web')->prefix(LaravelLocalization::setLocale().'/dashboard')
                 ->name('dashboard.')
                 ->group(base_path('routes/admin.php'));
         },
@@ -29,6 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
             'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
             'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+
 
         ]);
     })

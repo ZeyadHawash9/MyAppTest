@@ -49,3 +49,54 @@
 <script src="/Admin/js/custom/utilities/modals/create-app.js"></script>
 <script src="/Admin/js/custom/utilities/modals/new-target.js"></script>
 <script src="/Admin/js/custom/utilities/modals/users-search.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $(".FormToggleSubmit input[type='checkbox']").change(function(event) {
+            event.preventDefault();
+            var formData = new FormData(this.form); // Use this.form to get the associated form
+            var submitUrl = formData.get('url');
+
+            console.log(formData);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "post",
+                url: submitUrl,
+                data: formData,
+                contentType: false, // Set content type to false for FormData
+                processData: false,
+
+                success: function(data) {
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+
+                    toastr.success("The status has been changed successfully");
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText); // Log the response text
+                    console.log(status); // Log the status
+                    console.log(error); // Log the error
+                }
+            });
+        });
+    });
+</script>

@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
-    use SoftDeletes ,HasFactory ;
+    use SoftDeletes, HasFactory,Notifiable;
     public $translatable = ['name'];
+    protected $guard = 'admin';
 
 
     protected $fillable = [
-        'name', 'username', 'image', 'email', 'email_verified_at', 'password'
+        'name', 'user_name', 'phone_number', 'is_active', 'image', 'email', 'email_verified_at', 'password'
     ];
 
     protected $hidden = [
@@ -23,5 +24,13 @@ class Admin extends Authenticatable
     ];
 
     protected $dates = ['deleted_at'];
-}
 
+
+    public function getImageAttribute($value)
+    {
+        if (isset($value))
+            return url('storage') . '/' . $value;
+
+        return null;
+    }
+}
