@@ -543,22 +543,16 @@
                                                         <td>
                                                             <div class="col-md-9">
                                                                 <div class="form-check form-switch form-check-custom form-check-solid me-10">
-                                                                    <form id="toggleForm" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
+                                                                    <form target="_self" id="toggleForm" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
                                                                         @csrf
                                                                         <input type="hidden" name="url" value="{{ route('dashboard.admins.status', $admin) }}">
+                                                                        <input type="hidden" name="id" value="{{ $admin->id }}">
+
                                                                         <input class="form-check-input h-30px w-50px" name="autotimezone" type="checkbox" value=""
                                                                             id="autotimezone" {{ $admin->is_active == 1 ? 'checked' : '' }}>
                                                                     </form>
                                                                 </div>
-                                                                <!--end::Switch-->
 
-                                                                <script>
-                                                                    // Add an event listener to the checkbox
-                                                                    document.getElementById('autotimezone').addEventListener('change', function () {
-                                                                        // Submit the form when the checkbox is clicked
-                                                                        document.getElementById('toggleForm').submit();
-                                                                    });
-                                                                </script>
                                                             </div>
                                                         </td>
                                                         <!--end::Two step=-->
@@ -586,6 +580,10 @@
                                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
                                                                 data-kt-menu="true">
                                                                 <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="{{ route('dashboard.admins.show', $admin->id) }}"
+                                                                        class="menu-link px-3">show</a>
+                                                                </div>
                                                                 <div class="menu-item px-3">
                                                                     <a href="{{ route('dashboard.admins.edit', $admin->id) }}"
                                                                         class="menu-link px-3">Edit</a>

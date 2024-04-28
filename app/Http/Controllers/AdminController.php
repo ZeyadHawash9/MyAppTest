@@ -50,7 +50,7 @@ class AdminController extends Controller
     {
 
         $admin = Admin::find($id);
-        $admin->status = $admin->status === 'active' ? 'inactive' : 'active';
+        $admin->is_active = $admin->is_active ==  1  ? 0 : 1;
         $admin->save();
         return response()->json(['message' => 'Admin status updated successfully'], 200);
     }
