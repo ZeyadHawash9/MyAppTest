@@ -10,7 +10,8 @@
         "laravel/tinker": "^2.9",
         "mcamara/laravel-localization": "^2.0",
         "php-flasher/flasher-toastr-laravel": "^1.15",
-        "spatie/laravel-translatable": "^6.6"
+        "spatie/laravel-translatable": "^6.6",
+        "yajra/laravel-datatables-oracle": "^11.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

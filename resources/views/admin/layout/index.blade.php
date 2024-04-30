@@ -18,8 +18,14 @@
         content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express Node.js & Flask Admin Dashboard Theme" />
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
     <link rel="shortcut icon" href="/Admin/media/logos/favicon.ico" />
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+
+
     <!--begin::Fonts(mandatory for all pages)-->
     @include('admin.layout.css')
 
