@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminRequest extends FormRequest
+class AdminUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class AdminRequest extends FormRequest
             'name' => 'required|string|max:255',
             'user_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
-            'email' => 'required|email|unique:admins,email',
-            'password' => 'required|string|min:8', // Adjust minimum password length as needed
+            'email' => 'required|email|max:255',
 
         ];
     }

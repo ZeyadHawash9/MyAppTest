@@ -27,11 +27,11 @@ Route::group(['middleware' => 'auth:admin'], function () {
     });
     Route::resource('Categories', CategoryController::class);
 
+    Route::get('logout/', [AdminLoginController::class,'logout'])->name('logout');
 
 });
 
 
 Route::get('/login',[AdminLoginController::class,'showLoginForm'])->name('admin.login');
 Route::post('/login', [AdminLoginController::class,'login'])->name('admin.login.submit');
-// Route::get('logout/', 'Auth\AdminLoginController@logout')->name('admin.logout');
 

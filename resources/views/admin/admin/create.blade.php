@@ -87,15 +87,7 @@
                                             @if (isset($admin))
                                                 @method('PUT')
                                             @endif
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                            <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
+
 
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
@@ -153,7 +145,7 @@
                                                 <!--begin::Input-->
                                                 <input type="text" name="name"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Full name" value="{{ $admin->name ??old('name') }}" />
+                                                    placeholder="Full name" value="{{ $admin->name ?? old('name') }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -166,7 +158,7 @@
                                                 <input type="text" name="user_name"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="User Name"
-                                                    value="{{ $admin->user_name ??old('user_name')  }}" />
+                                                    value="{{ $admin->user_name ?? old('user_name') }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -179,7 +171,7 @@
                                                 <input type="text" name="phone_number"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="Phone Number"
-                                                    value="{{$admin->user_name??  old('user_name')  }}" />
+                                                    value="{{ $admin->user_name ?? old('user_name') }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -192,7 +184,7 @@
                                                 <input type="email" name="email"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="example@domain.com"
-                                                    value="{{ $admin->email ?? old('email')  }}" />
+                                                    value="{{ $admin->email ?? old('email') }}" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
