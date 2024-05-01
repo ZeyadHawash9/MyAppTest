@@ -52,4 +52,11 @@ class Category extends Model
     {
         return !$this->children()->exists();
     }
+    public function getImageAttribute($value)
+    {
+        if (isset($value))
+            return url('storage') . '/' . $value;
+
+        return null;
+    }
 }
