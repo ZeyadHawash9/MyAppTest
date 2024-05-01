@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AdminCreateRequest;
-use App\Http\Requests\AdminUpdateRequest;
+use App\Http\Requests\Admin\AdminCreateRequest;
+use App\Http\Requests\Admin\AdminUpdateRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
