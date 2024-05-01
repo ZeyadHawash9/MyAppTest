@@ -50,8 +50,7 @@
 <script src="/Admin/js/custom/utilities/modals/new-target.js"></script>
 <script src="/Admin/js/custom/utilities/modals/users-search.js"></script>
 <script>
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
 </script>
 <script>
     $(document).ready(function() {
@@ -103,3 +102,32 @@
         });
     });
 </script>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                <script>
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toastr-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error('{{ $error }}');
+                </script>
+            @endforeach
+        </ul>
+    </div>
+@endif
