@@ -13,11 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
         using: function () {
-            Route::prefix('/')
-            ->group(base_path('routes/web.php'));
-            Route::middleware('web')->prefix(LaravelLocalization::setLocale().'/dashboard')
+            Route::middleware('web')->prefix('/')
+                ->group(base_path('routes/web.php'));
+
+
+            $locale = LaravelLocalization::setLocale() ?? app()->getLocale();
+            Route::middleware('web')->prefix($locale . '/dashboard')
                 ->name('dashboard.')
-                ->group(base_path('routes/admin.php'));
+                ->group(base_path('routes/Admin.php'));
         },
 
     )

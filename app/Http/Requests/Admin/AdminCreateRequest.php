@@ -22,12 +22,12 @@ class AdminCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'image|mimes:png,jpg,jpeg|max:2048', // Validate image file
+            'image' => 'image|mimes:png,jpg,jpeg|max:2048',
             'name' => 'required|string|max:255',
             'user_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'email' => 'required|email|unique:admins,email',
-            'password' => 'required|string|min:8', // Adjust minimum password length as needed
+            'password' => 'required|string|min:8',  
 
         ];
     }

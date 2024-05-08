@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -20,13 +21,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if ($guard == "admin" && Auth::guard($guard)->check()) {
-                return redirect('/admin/dashboard');
-            }
-
-
-
-            if (Auth::guard($guard)->check()) {
-                return redirect('/dd');
+                return redirect(LaravelLocalization::setLocale().'/admin/dashboard');
             }
         }
 

@@ -1,31 +1,38 @@
 
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\AdminLoginController;
-use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
-
-
-
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Dashboard\AdminController;
+use App\Http\Controllers\Dashboard\CategoryController;
 
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/', function () {
-        return view('admin.index');
+        return view('dashboard.index');
     })->name('home');
 
     Route::group(['prefix' => 'admins','as'=>'admins.'], function () {
         Route::post('/{id}/active', [AdminController::class, 'changeStatus'])->name('status');
+        Route::get('/any-data', [AdminController::class, 'anyData'])->name('anyData');
+
     });
-    Route::resource('admins', AdminController::class);
+
 
     Route::group(['prefix' => 'Categories','as'=>'Categories.'], function () {
-        Route::post('/{id}/active', [CategoryController::class, 'changeStatus'])->name('status');
-        Route::get('/any-data', [CategoryController::class, 'anyData'])->name('status');
+        Route::post('/{id}/activex', [CategoryController::class, 'changeStatus'])->name('status');
+        Route::get('/any-data', [CategoryController::class, 'anyData'])->name('anyData');
 
     });
-    Route::resource('Categories', CategoryController::class);
+
+
+    Route::resources([
+        'admins' => AdminController::class,
+        'categories' => CategoryController::class,
+    ]);
+
+
+
 
     Route::get('logout/', [AdminLoginController::class,'logout'])->name('logout');
 

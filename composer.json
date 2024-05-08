@@ -8,8 +8,8 @@
         "php": "^8.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "laravel/ui": "^4.5",
         "mcamara/laravel-localization": "^2.0",
-        "php-flasher/flasher-toastr-laravel": "^1.15",
         "spatie/laravel-translatable": "^6.6",
         "yajra/laravel-datatables-oracle": "^11.1"
     },
@@ -33,7 +33,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "app/Helpers/system.php"
+        ]
     },
     "scripts": {
         "post-autoload-dump": [
