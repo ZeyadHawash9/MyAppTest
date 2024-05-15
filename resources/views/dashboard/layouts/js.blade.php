@@ -17,8 +17,11 @@
         document.documentElement.setAttribute("data-theme", themeMode);
     }
 </script>
+
 <script>
     var hostUrl = "{{ asset('dashboard/') }}";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    var locale = document.querySelector('meta[name="locale"]').getAttribute('content');
 </script>
 <script src="{{ asset('dashboard/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('dashboard/js/scripts.bundle.js') }}"></script>
@@ -44,9 +47,7 @@
 <script src="{{ asset('dashboard/js/custom/utilities/modals/users-search.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script>
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-</script>
+
 <script>
     $(document).ready(function() {
         $(".FormToggleSubmit input[type='checkbox']").change(function(event) {

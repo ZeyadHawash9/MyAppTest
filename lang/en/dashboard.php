@@ -36,6 +36,15 @@ return [
     'languages show' => 'languages show',
     'iso'=>'Iso',
     'dir'=>'dir',
+    'description'=>'description',
+    'parent'=>'Parent',
+    'categories' => 'Categories',
+    'categories list' => 'Categories List',
+    'categories create' => 'Categories Create',
+    'categories edit' => 'Categories Edit',
+    'categories show' => 'Categories Show',
+
+
 
 
 

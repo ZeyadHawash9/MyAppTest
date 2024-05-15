@@ -102,17 +102,15 @@ class AdminController extends Controller
         return redirect()->route(dashboard() . '.admins.index')->with('message', __('Admin created successfully!'));
     }
 
-    public function changeStatus($id)
+    public function changeStatus(Admin $admin)
     {
-        $admin = Admin::FindOrFail($id);
         $admin->is_active = !($admin->is_active);
         $admin->save();
         return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Admin status updated successfully')]);
     }
 
-    public function show(string $id)
+    public function show(Admin $admin)
     {
-        $admin = Admin::FindOrFail($id);
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.admins.index') => __('dashboard.admins list'),
@@ -129,9 +127,8 @@ class AdminController extends Controller
     }
 
 
-    public function edit(string $id)
+    public function edit(Admin $admin)
     {
-        $admin = Admin::FindOrFail($id);
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.admins.index') => __('dashboard.admins list'),
@@ -147,12 +144,11 @@ class AdminController extends Controller
         return view(dashboard() . '.admins.create', $data);
     }
 
-    public function update(AdminUpdateRequest $request, string $id)
+    public function update(AdminUpdateRequest $request, Admin $admin)
     {
 
 
 
-        $admin = Admin::findOrFail($id);
         $admin->name = $request->filled('name') ? $request->name : $admin->name;
         $admin->user_name = $request->input('user_name', $admin->user_name);
         $admin->phone_number = $request->input('phone_number', $admin->phone_number);
@@ -166,10 +162,10 @@ class AdminController extends Controller
     }
 
 
-    public function destroy(string $id)
+    public function destroy(Admin $admin)
     {
 
-        Admin::FindOrFail($id)->delete();
+        $admin->delete();
         return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Admin Destroy successfully!')]);
     }
 }

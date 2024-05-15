@@ -6,26 +6,25 @@
                  <div class="card">
                      <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-row-reverse mt-12">
                          <div class="d-flex align-items-center gap-2 gap-lg-3">
-                             <a href="{{ route('dashboard.admins.create') }}"
+                             <a href="{{ route('dashboard.categories.create') }}"
                                  class="btn btn-sm fw-bold btn-primary">{{ __('dashboard.create') }}</a>
                          </div>
                      </div>
                      <div class="card-body py-4">
-                         <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_Admin">
+                         <table class="table align-middle table-row-dashed fs-6 gy-5" id="table_categories">
                              <thead>
                                  <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                      <th class="w-10px pe-2">
                                          <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                              <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                 data-kt-check-target="#table_Admin .form-check-input" value="1" />
+                                                 data-kt-check-target="#table_categories .form-check-input"
+                                                 value="1" />
                                          </div>
                                      </th>
-
                                      <th class="text-center">{{ __('dashboard.image') }}</th>
                                      <th class="text-center">{{ __('dashboard.name') }}</th>
-                                     <th class="text-center">{{ __('dashboard.email') }}</th>
-                                     <th class="text-center">{{ __('dashboard.user name') }}</th>
-                                     <th class="text-center">{{ __('dashboard.phone number') }}</th>
+                                     <th class="text-center">{{ __('dashboard.description') }}</th>
+                                     <th class="text-center">{{ __('dashboard.parent') }}</th>
                                      <th class="text-center">{{ __('dashboard.active') }}</th>
                                      <th class="text-center">{{ __('dashboard.actions') }}</th>
                                  </tr>
@@ -37,35 +36,33 @@
          </div>
      </div>
  @endsection
-
  @section('js')
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
-
      <script type="text/javascript">
          $(document).ready(function() {
-             $('#table_Admin').DataTable({
-
+             $('#table_categories').DataTable({
                  processing: true,
                  serverSide: true,
-                 ajax:  `/${locale}/dashboard/admins/any-data`,
+                 ajax: `/${locale}/dashboard/categories/any-data`,
                  columns: [{
                          data: 'id',
                          name: 'id'
-                     }, {
+                     },
+                     {
                          data: 'image',
                          name: 'image'
-                     }, {
+                     },
+                     {
                          data: 'name',
                          name: 'name'
-                     }, {
-                         data: 'email',
-                         name: 'email'
-                     }, {
-                         data: 'user_name',
-                         name: 'user_name'
-                     }, {
-                         data: 'phone_number',
-                         name: 'phone_number'
+                     },
+                     {
+                         data: 'description',
+                         name: 'description'
+                     },
+                     {
+                         data: 'parent',
+                         name: 'parent'
                      },
                      {
                          data: 'active',
@@ -74,12 +71,10 @@
                      {
                          data: 'action',
                          name: 'action'
-                     },
-
+                     }
                  ]
              });
          });
-
          $(document).on('click', '.delete', function(event) {
 
              var _this = $(this);
@@ -87,9 +82,9 @@
 
              var action = $(this).attr('href');
 
-             var admin_name = _this.closest('tr').find("td:eq(2)").text();
+             var Category_name = _this.closest('tr').find("td:eq(2)").text();
              bootbox.confirm({
-                 message: " {!! __('dashboard.delete_msg') !!} (" + admin_name + ") ?",
+                 message: " {!! __('dashboard.delete_msg') !!} (" + Category_name + ") ?",
                  buttons: {
 
 
@@ -116,8 +111,8 @@
                                      $('.alert').hide();
                                      toastr['success'](data.message, '');
 
-                                     if ($("#table_Admin").length) {
-                                         var admins_tbl = $('#table_Admin').DataTable();
+                                     if ($("#table_categories").length) {
+                                         var admins_tbl = $('#table_categories').DataTable();
                                          admins_tbl.ajax.reload();
                                      }
                                  } else {
@@ -137,11 +132,11 @@
 
 
          });
-         $('#table_Admin').on('change', '.make-switch.active', function(event, state) {
+         $('#table_categories').on('change', '.make-switch.active', function(event, state) {
 
              var admin_id = $(this).data('id');
              $.ajax({
-                 url:`/en/dashboard/admins/${admin_id}/active`,
+                 url: `/${locale}/dashboard/categories/${admin_id}/active`,
 
                  type: 'post',
                  dataType: 'json',
@@ -149,8 +144,8 @@
                      '_token': csrf_token
                  },
                  success: function(data) {
-                    if (data.status) {
-                        toastr['success'](data.message, '');
+                     if (data.status) {
+                         toastr['success'](data.message, '');
                      } else {
                          toastr['error'](data.message);
                      }

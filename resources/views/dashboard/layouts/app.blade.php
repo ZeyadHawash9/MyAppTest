@@ -16,6 +16,8 @@
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="locale" content="{{ LaravelLocalization::getCurrentLocale() }}">
+
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
     <link rel="shortcut icon" href="{{ asset('dashboard/media/logos/favicon.ico') }}" />
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

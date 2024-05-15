@@ -100,69 +100,65 @@ class LanguageController extends Controller
         return redirect()->route(dashboard() . '.languages.index')->with('message', __('language created successfully!'));
     }
 
-    public function changeStatus($id)
+    public function changeStatus( Language $language)
     {
-        $Language = Language::FindOrFail($id);
-        $Language->is_active = !($Language->is_active);
-        $Language->save();
+        $language->is_active = !($language->is_active);
+        $language->save();
         return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Language status updated successfully')]);
     }
 
-    public function show(string $id)
+    public function show(Language $language)
     {
-        $Language = Language::FindOrFail($id);
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.languages.index') => __('dashboard.admins list'),
-            route('dashboard.languages.show', $Language) => __('dashboard.admins show'),
+            route('dashboard.languages.show', $language) => __('dashboard.admins show'),
 
         ];
 
         $data = [
             'page_title' => __('dashboard.admins show'),
             'links' => $links,
-            'Language' => $Language
+            'language' => $language
         ];
         return view(dashboard() . '.languages.show', $data);
     }
 
 
-    public function edit(string $id)
+    public function edit(Language $language)
     {
-        $Language = Language::FindOrFail($id);
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.languages.index') => __('dashboard.admins list'),
-            route('dashboard.languages.edit', $Language) => __('dashboard.admins edit'),
+            route('dashboard.languages.edit', $language) => __('dashboard.admins edit'),
 
         ];
 
         $data = [
             'page_title' => __('dashboard.admins edit'),
             'links' => $links,
-            'Language' => $Language
+            'language' => $language
         ];
         return view(dashboard() . '.languages.create', $data);
     }
 
-    public function update(UpdateLanguageRequest $request, string $id)
+    public function update(UpdateLanguageRequest $request, Language $language)
     {
 
-        $Language = Language::findOrFail($id);
-        $Language->name = $request->filled('name') ? $request->name : $Language->name;
-        $Language->iso = $request->input('iso', $Language->iso);
-        $Language->dir = $request->input('dir', $Language->dir);
-        $Language->image = $request->hasFile('image') ? storePhoto('Languages', $request->file('image')) : $Language->image;
-        $Language->save();
+        $language->name = $request->filled('name') ? $request->name : $language->name;
+        $language->iso = $request->input('iso', $language->iso);
+        $language->dir = $request->input('dir', $language->dir);
+        $language->image = $request->hasFile('image') ? storePhoto('languages', $request->file('image')) : $language->image;
+        $language->save();
 
         return redirect()->route(dashboard() . '.languages.index')->with('message', __('Language Update successfully!'));
     }
 
 
-    public function destroy(string $id)
+    public function destroy(Language $language)
     {
 
-        Language::FindOrFail($id)->delete();
+        $language->delete();
         return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Language Destroy successfully!')]);
     }
 }

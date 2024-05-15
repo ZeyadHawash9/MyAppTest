@@ -40,7 +40,7 @@ class Category extends Model
     public function getImageAttribute($value)
     {
         if (isset($value))
-            return url('storage') . '/' . $value;
+            return url('storage') . '/categories/' . $value;
 
         return null;
     }

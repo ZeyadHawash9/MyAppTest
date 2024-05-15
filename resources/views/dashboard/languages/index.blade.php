@@ -45,7 +45,7 @@
 
                  processing: true,
                  serverSide: true,
-                 ajax: "{{ url('en/dashboard/languages/any-data') }}",
+                 ajax:  `/${locale}/dashboard/languages/any-data`,
                  columns: [ {
                          data: 'id',
                          name: 'id'

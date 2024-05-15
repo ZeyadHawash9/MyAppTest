@@ -61,7 +61,7 @@
                                                 <input type="text" name="iso"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="iso"
-                                                    value="{{ $Language->iso ?? old('iso') }}" />
+                                                    value="{{ $admin->iso ?? old('iso') }}" />
                                             </div>
                                             <div class="fv-row mb-7">
                                                 <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.dir') }}</label>
