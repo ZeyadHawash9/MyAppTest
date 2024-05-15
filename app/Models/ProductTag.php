@@ -14,10 +14,7 @@ class ProductTag extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'product_id',
-        'tag_id',
-    ];
+    protected  $guarded=[];
 
     /**
      * Get the product associated with the product tag.

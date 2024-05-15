@@ -15,10 +15,7 @@ class Admin extends Authenticatable
     protected $guard = 'admin';
 
 
-    protected $fillable = [
-        'name', 'user_name', 'phone_number', 'is_active', 'image', 'email', 'email_verified_at', 'password'
-    ];
-
+    protected  $guarded=[];
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -29,7 +26,7 @@ class Admin extends Authenticatable
     public function getImageAttribute($value)
     {
         if (isset($value))
-            return url('storage') . '/' . $value;
+            return url('storage') . '/admins/' . $value;
 
         return null;
     }

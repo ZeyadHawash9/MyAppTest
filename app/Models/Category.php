@@ -13,9 +13,7 @@ class Category extends Model
 
     public $translatable = ['name', 'description'];
 
-    protected $fillable = [
-        'name', 'description', 'image', 'parent_id'
-    ];
+    protected  $guarded=[];
 
     protected $dates = ['deleted_at'];
 
@@ -24,12 +22,7 @@ class Category extends Model
     {
         return self::where('parent_id', null)->get();
     }
-    public static function getSupCategories()
-    {
-        return self::whereHas('parent', function ($query) {
-            $query->whereNull('parent_id');
-        })->get();
-    }
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
@@ -39,14 +32,6 @@ class Category extends Model
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
-    }
-    public function isParent()
-    {
-        return $this->children()->exists();
-    }
-    public function isNotChild()
-    {
-        return is_null($this->parent_id);
     }
     public function isNotParent()
     {

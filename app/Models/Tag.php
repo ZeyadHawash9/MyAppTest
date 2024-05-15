@@ -18,11 +18,7 @@ class Tag extends Model
 
      public $translatable = ['name'];
 
-    protected $fillable = [
-        'name',
-        'active',
-    ];
-
+     protected  $guarded=[];
     /**
      * The attributes that should be cast.
      *

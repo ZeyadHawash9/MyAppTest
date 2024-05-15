@@ -19,8 +19,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     });
 
 
-    Route::group(['prefix' => 'Categories','as'=>'Categories.'], function () {
-        Route::post('/{id}/activex', [CategoryController::class, 'changeStatus'])->name('status');
+    Route::group(['prefix' => 'categories','as'=>'Categories.'], function () {
+        Route::post('/{id}/active', [CategoryController::class, 'changeStatus'])->name('status');
         Route::get('/any-data', [CategoryController::class, 'anyData'])->name('anyData');
 
     });

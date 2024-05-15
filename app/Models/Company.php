@@ -12,9 +12,7 @@ class Company extends Model
     use HasFactory, SoftDeletes,HasTranslations;
     public $translatable = ['description'];
 
-    protected $fillable = [
-        'name', 'description', 'image'
-    ];
+    protected  $guarded=[];
 
     protected $dates = ['deleted_at'];
     /**
