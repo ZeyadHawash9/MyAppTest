@@ -13,7 +13,6 @@ class AdminCreateRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,7 +26,7 @@ class AdminCreateRequest extends FormRequest
             'user_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'email' => 'required|email|unique:admins,email',
-            'password' => 'required|string|min:8',  
+            'password' => 'required|string|min:8',
 
         ];
     }

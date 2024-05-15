@@ -46,19 +46,19 @@
                 <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
                     <div class="card-body p-9">
                         <div class="row mb-7">
-                            <label class="col-lg-4 fw-semibold text-muted">{{ __('dashboard.Name') }}</label>
+                            <label class="col-lg-4 fw-semibold text-muted">{{ __('dashboard.name') }}</label>
                             <div class="col-lg-8">
                                 <span class="fw-bold fs-6 text-gray-800">{{ $admin->name }}</span>
                             </div>
                         </div>
                            <div class="row mb-7">
-                            <label class="col-lg-4 fw-semibold text-muted">{{ __('dashboard.User Name') }}</label>
+                            <label class="col-lg-4 fw-semibold text-muted">{{ __('dashboard.user name') }}</label>
                             <div class="col-lg-8">
                                 <span class="fw-bold fs-6 text-gray-800">{{ $admin->user_name }}</span>
                             </div>
                         </div>
                         <div class="row mb-7">
-                            <label class="col-lg-4 fw-semibold text-muted">{{ __('dashboard.Phone Number') }}
+                            <label class="col-lg-4 fw-semibold text-muted">{{ __('dashboard.phone number') }}
                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Phone number must be active"></i></label>
                             <div class="col-lg-8 d-flex align-items-center">
                                 <span class="fw-bold fs-6 text-gray-800 me-2">{{ $admin->phone_number }}</span>

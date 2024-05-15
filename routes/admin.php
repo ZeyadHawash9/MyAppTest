@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\CategoryController;
-
+use App\Http\Controllers\Dashboard\LanguageController;
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/', function () {
@@ -25,10 +25,18 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     });
 
+    Route::group(['prefix' => 'languages','as'=>'languages.'], function () {
+        Route::post('/{id}/active', [LanguageController::class, 'changeStatus'])->name('status');
+        Route::get('/any-data', [LanguageController::class, 'anyData'])->name('anyData');
+
+    });
+
 
     Route::resources([
         'admins' => AdminController::class,
         'categories' => CategoryController::class,
+        'languages' => LanguageController::class,
+
     ]);
 
 

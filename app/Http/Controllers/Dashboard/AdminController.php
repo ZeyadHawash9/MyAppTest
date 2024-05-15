@@ -105,7 +105,7 @@ class AdminController extends Controller
     public function changeStatus($id)
     {
         $admin = Admin::FindOrFail($id);
-        $admin->active = !($admin->is_active);
+        $admin->is_active = !($admin->is_active);
         $admin->save();
         return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Admin status updated successfully')]);
     }
@@ -149,6 +149,8 @@ class AdminController extends Controller
 
     public function update(AdminUpdateRequest $request, string $id)
     {
+
+
 
         $admin = Admin::findOrFail($id);
         $admin->name = $request->filled('name') ? $request->name : $admin->name;
