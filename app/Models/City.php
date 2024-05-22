@@ -18,12 +18,7 @@ class City extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'cost',
-        'active',
-    ];
-
+    protected  $guarded=[];
     /**
      * The attributes that should be cast.
      *

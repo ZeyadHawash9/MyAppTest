@@ -15,19 +15,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'cart_id',
-        'status',
-        'comment',
-        'payment_method',
-        'payment_status',
-        'delivery_method',
-        'delivery_pickup_interval',
-        'paid_at',
-        'shipped_at',
-        'complete_at',
-        'number_of_packages',
-    ];
+    protected  $guarded=[];
 
     protected $dates = [
         'paid_at',

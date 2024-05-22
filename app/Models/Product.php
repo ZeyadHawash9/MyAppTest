@@ -12,18 +12,7 @@ class Product extends Model
     public $translatable = ['name','description','how_to_use'];
 
 
-    protected $fillable = [
-        'name',
-        'company_id',
-        'description',
-        'image',
-        'cost_price',
-        'full_price',
-        'price',
-        'discount',
-        'is_new',
-        'sort_order',
-    ];
+    protected  $guarded=[];
 
 
     protected $casts = [

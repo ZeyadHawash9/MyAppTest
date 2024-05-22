@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\CategoryController;
-
+use App\Http\Controllers\Dashboard\LanguageController;
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/', function () {
@@ -13,15 +13,21 @@ Route::group(['middleware' => 'auth:admin'], function () {
     })->name('home');
 
     Route::group(['prefix' => 'admins','as'=>'admins.'], function () {
-        Route::post('/{id}/active', [AdminController::class, 'changeStatus'])->name('status');
+        Route::post('/{admin}/active', [AdminController::class, 'changeStatus'])->name('status');
         Route::get('/any-data', [AdminController::class, 'anyData'])->name('anyData');
 
     });
 
 
-    Route::group(['prefix' => 'Categories','as'=>'Categories.'], function () {
-        Route::post('/{id}/activex', [CategoryController::class, 'changeStatus'])->name('status');
+    Route::group(['prefix' => 'categories','as'=>'categories.'], function () {
+        Route::post('/{category}/active', [CategoryController::class, 'changeStatus'])->name('status');
         Route::get('/any-data', [CategoryController::class, 'anyData'])->name('anyData');
+
+    });
+
+    Route::group(['prefix' => 'languages','as'=>'languages.'], function () {
+        Route::post('/{language}/active', [LanguageController::class, 'changeStatus'])->name('status');
+        Route::get('/any-data', [LanguageController::class, 'anyData'])->name('anyData');
 
     });
 
@@ -29,6 +35,8 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::resources([
         'admins' => AdminController::class,
         'categories' => CategoryController::class,
+        'languages' => LanguageController::class,
+
     ]);
 
 

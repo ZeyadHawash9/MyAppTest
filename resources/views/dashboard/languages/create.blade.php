@@ -12,12 +12,12 @@
                                         <div class="col-xxl-8">
                                         </div>
                                         <form class="form" id="kt_modal_add_user_form" method="POST"
-                                            @if (!isset($admin)) action= "{{ route('dashboard.admins.store') }}"
+                                            @if (!isset($Language)) action= "{{ route('dashboard.languages.store') }}"
                                            @else
-                                           action= "{{ route('dashboard.admins.update', $admin) }}" @endif
+                                           action= "{{ route('dashboard.languages.update', $Language) }}" @endif
                                             enctype="multipart/form-data">
                                             @csrf
-                                            @if (isset($admin))
+                                            @if (isset($Language))
                                                 @method('PUT')
                                             @endif
                                             <div class="fv-row mb-7">
@@ -25,7 +25,7 @@
                                                 <div class="image-input image-input-outline image-input-placeholder"
                                                     data-kt-image-input="true">
                                                     <div class="image-input-wrapper w-125px h-125px"
-                                                        style="background-image: url('/Admin/media/avatars/300-6.jpg');">
+                                                        style="background-image: url('/dashboard/media/avatars/300-6.jpg');">
                                                     </div>
                                                     <label
                                                         class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
@@ -53,35 +53,34 @@
                                                 <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.name') }}</label>
                                                 <input type="text" name="name"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Full name" value="{{ $admin->name ?? old('name') }}" />
+                                                    placeholder="Full name" value="{{ $Language->name ?? old('name') }}" />
+                                            </div>
+
+                                            <div class="fv-row mb-7">
+                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.iso') }}</label>
+                                                <input type="text" name="iso"
+                                                    class="form-control form-control-solid mb-3 mb-lg-0"
+                                                    placeholder="iso"
+                                                    value="{{ $admin->iso ?? old('iso') }}" />
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.user name') }}</label>
-                                                <input type="text" name="user_name"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="User Name"
-                                                    value="{{ $admin->user_name ?? old('user_name') }}" />
+                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.dir') }}</label>
+
+                                                <select name="dir"
+                                                class="form-select form-select-solid"
+                                                data-control="select2" data-hide-search="true"
+                                                value="{{ $admin->dir ?? old('dir') }}"
+                                                >
+
+                                                <option value="rtl">
+                                                    rtl</option>
+                                                    <option value="ltr">
+                                                        ltr</option>
+
+                                            </select>
+
                                             </div>
-                                            <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.phone number') }}</label>
-                                                <input type="text" name="phone_number"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Phone Number"
-                                                    value="{{ $admin->phone_number ?? old('phone_number') }}" />
-                                            </div>
-                                            <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.email') }}</label>
-                                                <input type="email" name="email"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="example@domain.com"
-                                                    value="{{ $admin->email ?? old('email') }}" />
-                                            </div>
-                                            <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.password') }}</label>
-                                                <input type="password" name="password"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="password" value="" />
-                                            </div>
+
                                             <div class="text-center pt-15">
                                                 <a href="{{ route('dashboard.admins.index') }}" class="btn btn-light me-3">{{ __('dashboard.discard') }}</a>
 

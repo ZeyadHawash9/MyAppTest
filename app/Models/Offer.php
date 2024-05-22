@@ -15,17 +15,7 @@ class Offer extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'image',
-        'item',
-        'expiry_date',
-        'full_price',
-        'price',
-        'discount',
-        'limit_user',
-        'note',
-    ];
+    protected  $guarded=[];
 
     /**
      * The attributes that should be cast.

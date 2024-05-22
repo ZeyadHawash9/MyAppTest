@@ -1,7 +1,27 @@
 <?php
 
 return [
-'dashboards'=>'لوحات المعلومات',
-'delete_msg'=>'هل انت متأكد من حذف العنصر ',
-
+    'dashboards' => 'لوحات القيادة',
+    'account settings' => 'إعدادات الحساب',
+    'sign out' => 'تسجيل الخروج',
+    'language' => 'اللغة',
+    'admin management' => 'إدارة المشرفين',
+    'category management' => 'إدارة الفئات',
+    'settings' => 'الإعدادات',
+    'admins' => 'المشرفون',
+    'admins list' => 'قائمة المشرفين',
+    'create' => 'إنشاء',
+    'Image' => 'الصورة',
+    'Name' => 'الاسم',
+    'Email' => 'البريد الإلكتروني',
+    'User Name' => 'اسم المستخدم',
+    'Phone Number' => 'رقم الهاتف',
+    'is Active' => 'مفعل',
+    'Actions' => 'الإجراءات',
+    'admins create' => 'إنشاء مشرف',
+    'admins show' => 'عرض مشرف',
+    'admins edit' => 'تحرير مشرف',
+    'change' => 'تغيير',
+    'confirm' => 'تأكيد',
+    'delete_msg' => 'هل أنت متأكد أنك تريد حذف العنصر',
 ];

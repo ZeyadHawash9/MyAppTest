@@ -7,11 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductRate extends Model
 {
-    protected $fillable = [
-        'product_id',
-        'rating',
-        'review',
-    ];
+    protected  $guarded=[];
 
     /**
      * Get the product that owns the rate.

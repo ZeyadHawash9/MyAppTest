@@ -17,10 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 ->group(base_path('routes/web.php'));
 
 
-            $locale = LaravelLocalization::setLocale() ?? app()->getLocale();
-            Route::middleware('web')->prefix($locale . '/dashboard')
+            Route::middleware('web', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath')->prefix( LaravelLocalization::setLocale() . '/dashboard')
                 ->name('dashboard.')
-                ->group(base_path('routes/Admin.php'));
+                ->group(base_path('routes/admin.php'));
         },
 
     )

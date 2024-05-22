@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Admin\AdminCreateRequest;
 use App\Http\Requests\Admin\AdminUpdateRequest;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\Facades\DataTables;
+use \Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -19,6 +21,7 @@ class AdminController extends Controller
 
         $Admin = Admin::select('*');
         return DataTables::of($Admin)
+
             ->editColumn('image', function ($Admin) {
                 return '<img src="' . $Admin->image . '"  width="80px" height="80px" class="rounded-circle">';
             })
@@ -41,8 +44,8 @@ class AdminController extends Controller
                             <input type="hidden" name="url" value="' . route('dashboard.admins.status', $row) . '">
                             <input type="hidden" name="id" value="' . $row->id . '">
 
-                            <input class="form-check-input h-30px w-50px" name="autotimezone" type="checkbox" value=""
-                                id="autotimezone" ' . ($row->is_active == 1 ? 'checked' : '') . ' >
+                            <input class="form-check-input h-30px w-50px make-switch active" name="autotimezone" type="checkbox" value=""
+                            data-id="' . $row->id . '"       id="autotimezone" ' . ($row->is_active == 1 ? 'checked' : '') . ' >
                         </form>
                     </div>
                 </div>';
@@ -51,85 +54,118 @@ class AdminController extends Controller
     public function index()
     {
 
-        // $admins = Admin::all();
+        $links = [
+            '#' => __('dashboard.admins'),
+            route('dashboard.admins.index') => __('dashboard.admins list'),
+        ];
 
-        return view(dashboard().'.admins.index');
+        $data = [
+            'page_title' => __('dashboard.admins list'),
+            'links' => $links
+        ];
+        return view(dashboard() . '.admins.index', $data);
     }
 
 
     public function create()
     {
-        return view('dashboard.admins.create');
+
+        $links = [
+            '#' => __('dashboard.admins'),
+            route('dashboard.admins.index') => __('dashboard.admins list'),
+            route('dashboard.admins.create') => __('dashboard.admins create'),
+
+        ];
+
+        $data = [
+            'page_title' => __('dashboard.admins create'),
+            'links' => $links
+        ];
+        return view(dashboard() . '.admins.create', $data);
     }
 
 
 
     public function store(AdminCreateRequest $request)
     {
-
-
-        Admin::create([
-            'name' => $request->name,
-            'user_name' => $request->user_name,
-            'phone_number' => $request->phone_number,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'image' => $request->hasFile('image') ? $request->file('image')->store('uploads', 'public') : null,
-        ]);
-
-
-        return redirect()->route('dashboard.admins.index')->with('message', 'Admin created successfully!');
-    }
-
-    public function changeStatus($id)
-    {
-
-        $admin = Admin::FindOrFail(3);
-        $admin->is_active = $admin->is_active ==  1  ? 0 : 1;
-        $admin->save();
-        return response()->json(['message' => 'Admin status updated successfully'], 200);
-    }
-
-    public function show(string $id)
-    {
-        $admin = Admin::FindOrFail($id);
-
-        $data = ['admin' => $admin];
-        return view('dashboard.admins.show', $data);
-    }
-
-
-    public function edit(string $id)
-    {
-        $admin = Admin::FindOrFail($id);
-
-        $data = ['admin' => $admin];
-        return view('dashboard.admins.create', $data);
-    }
-
-    public function update(AdminUpdateRequest $request, string $id)
-    {
-
-        $admin = Admin::FindOrFail($id);
-        $admin->fill([
-            'name' => $request->input('name'),
-            'user_name' => $request->input('user_name'),
-            'phone_number' => $request->input('phone_number'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-            'image' => $request->hasFile('image') ? $request->file('image')->store('uploads', 'public') : null,
-        ]);
+        $admin = new Admin();
+        $admin->name = $request->name;
+        $admin->user_name = $request->user_name;
+        $admin->phone_number = $request->phone_number;
+        $admin->email = $request->email;
+        $admin->password = bcrypt($request->password);
+        $admin->image = isset($request->image) ? storePhoto('admins', $request->image) : '';
         $admin->save();
 
 
-        return redirect()->route('dashboard.admins.index')->with('message', 'Admin Update successfully!');
+
+        return redirect()->route(dashboard() . '.admins.index')->with('message', __('Admin created successfully!'));
+    }
+
+    public function changeStatus(Admin $admin)
+    {
+        $admin->is_active = !($admin->is_active);
+        $admin->save();
+        return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Admin status updated successfully')]);
+    }
+
+    public function show(Admin $admin)
+    {
+        $links = [
+            '#' => __('dashboard.admins'),
+            route('dashboard.admins.index') => __('dashboard.admins list'),
+            route('dashboard.admins.show', $admin) => __('dashboard.admins show'),
+
+        ];
+
+        $data = [
+            'page_title' => __('dashboard.admins show'),
+            'links' => $links,
+            'admin' => $admin
+        ];
+        return view(dashboard() . '.admins.show', $data);
     }
 
 
-    public function destroy(string $id)
+    public function edit(Admin $admin)
+    {
+        $links = [
+            '#' => __('dashboard.admins'),
+            route('dashboard.admins.index') => __('dashboard.admins list'),
+            route('dashboard.admins.edit', $admin) => __('dashboard.admins edit'),
+
+        ];
+
+        $data = [
+            'page_title' => __('dashboard.admins edit'),
+            'links' => $links,
+            'admin' => $admin
+        ];
+        return view(dashboard() . '.admins.create', $data);
+    }
+
+    public function update(AdminUpdateRequest $request, Admin $admin)
     {
 
-        Admin::find($id)->delete();
-        return redirect()->route('dashboard.admins.index')->with('success', 'Admin Destroy successfully!');
+
+
+        $admin->name = $request->filled('name') ? $request->name : $admin->name;
+        $admin->user_name = $request->input('user_name', $admin->user_name);
+        $admin->phone_number = $request->input('phone_number', $admin->phone_number);
+        $admin->email = $request->input('email', $admin->email);
+        $admin->password = $request->filled('password') ? bcrypt($request->password) : $admin->password;
+        $admin->image = $request->hasFile('image') ? storePhoto('admins', $request->file('image')) : $admin->image;
+        $admin->save();
+
+
+        return redirect()->route(dashboard() . '.admins.index')->with('message', __('Admin Update successfully!'));
+    }
+
+
+    public function destroy(Admin $admin)
+    {
+
+        $admin->delete();
+        return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Admin Destroy successfully!')]);
     }
 }

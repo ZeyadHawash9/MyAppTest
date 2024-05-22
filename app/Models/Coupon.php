@@ -15,15 +15,7 @@ class Coupon extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'type',
-        'code',
-        'limit_user',
-        'user_id',
-        'expiry_date',
-        'status',
-    ];
+    protected  $guarded=[];
 
     /**
      * The attributes that should be cast.
