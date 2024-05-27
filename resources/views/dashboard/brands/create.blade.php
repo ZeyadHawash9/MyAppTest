@@ -28,12 +28,12 @@
                                             <!--end::Toolbar-->
                                         </div>
                                         <form class="form" id="kt_modal_add_user_form" method="POST"
-                                            @if (!isset($category)) action= "{{ route('dashboard.categories.store') }}"
+                                            @if (!isset($brand)) action= "{{ route('dashboard.brands.store') }}"
                                            @else
-                                           action= "{{ route('dashboard.categories.update', $category) }}" @endif
+                                           action= "{{ route('dashboard.brands.update', $brand) }}" @endif
                                             enctype="multipart/form-data">
                                             @csrf
-                                            @if (isset($category))
+                                            @if (isset($brand))
                                                 @method('PUT')
                                             @endif
                                             <div class="fv-row mb-7">
@@ -43,18 +43,7 @@
                                                         <div class="tab-pane fade @if ($loop->first) active show @endif"
                                                             id="kt_security_summary_tab_pane_{{ $language->iso }}"
                                                             role="tabpanel">
-                                                            <div class="fv-row mb-7">
-                                                                <!--begin::Label-->
-                                                                <label class="required fw-semibold fs-6 mb-2">Full
-                                                                    Name {{ $language->name }}</label>
-                                                                <!--end::Label-->
-                                                                <!--begin::Input-->
-                                                                <input type="text" name="name[{{ $language->iso }}]"
-                                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                                    placeholder="Full name"
-                                                                    value="{{ $category?->getTranslation('name', $language->iso) ?? old('name') }}" />
-                                                                <!--end::Input-->
-                                                            </div>
+
                                                             <div class="fv-row mb-7">
                                                                 <!--begin::Label-->
                                                                 <label class="required fw-semibold fs-6 mb-2">description
@@ -65,14 +54,19 @@
                                                                     name="description[{{ $language->iso }}]"
                                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                                     placeholder="description"
-                                                                    value="{{ $category?->getTranslation('description', $language->iso) ?? old('description') }}" />
+                                                                    value="{{ $brand?->getTranslation('description', $language->iso) ?? old('description') }}" />
                                                                 <!--end::Input-->
                                                             </div>
                                                         </div>
                                                         <!--end::Tab panel-->
                                                     @endforeach
                                                 </div>
-
+                                                <div class="fv-row mb-7">
+                                                    <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.name') }}</label>
+                                                    <input type="text" name="name"
+                                                        class="form-control form-control-solid mb-3 mb-lg-0"
+                                                        placeholder="Full name" value="{{ $brand->name ?? old('name') }}" />
+                                                </div>
                                                 <label
                                                     class="d-block fw-semibold fs-6 mb-5">{{ __('dashboard.image') }}</label>
                                                 <div class="image-input image-input-outline image-input-placeholder"
@@ -101,45 +95,9 @@
                                                         <i class="bi bi-x fs-2"></i>
                                                     </span>
                                                 </div>
-                                                <div class="form-check mt-5">
-                                                    <input class="form-check-input" type="checkbox" id="toggleCheckbox">
-                                                    <label class="form-check-label" for="toggleCheckbox">
-                                                        Is Child
-                                                    </label>
-                                                </div>
-
-                                                <div id="toggleDiv" style="display: none;">
-                                                    <label
-                                                        class="d-block fw-semibold fs-6 mb-5 mt-5">{{ __('dashboard.parent') }}</label>
-                                                    <div class="fv-row mb-7">
-
-                                                        <select name="parent" class="form-select form-select-solid"
-                                                            data-control="select2" data-hide-search="true"
-                                                            data-placeholder="Year">
-                                                            <option selected
-                                                            value=''>
-                                                            Choose a  parent </option>
-                                                            @foreach ($categories as $categorySelect)
-                                                                @if (isset($Language))
-                                                                    @if ($category->id == $categorySelect->id)
-                                                                        <option selected
-                                                                            value=" {{ $categorySelect->id }}">
-                                                                            {{ $categorySelect->name }}</option>
-                                                                    @else
-                                                                        <option value=" {{ $categorySelect->id }}">
-                                                                            {{ $categorySelect->name }}</option>
-                                                                    @endif
-                                                                @else
-                                                                    <option value=" {{ $categorySelect->id }}">
-                                                                        {{ $categorySelect->name }}</option>
-                                                                @endif
-                                                            @endforeach
 
 
-                                                        </select>
 
-                                                    </div>
-                                                </div>
 
                                             </div>
 
