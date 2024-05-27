@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Dashboard\AdminController;
+use App\Http\Controllers\Dashboard\BrandController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\LanguageController;
 
@@ -31,11 +32,17 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     });
 
+    Route::group(['prefix' => 'brands','as'=>'brands.'], function () {
+        Route::post('/{brand}/active', [BrandController::class, 'changeStatus'])->name('status');
+        Route::get('/any-data', [BrandController::class, 'anyData'])->name('anyData');
 
+    });
     Route::resources([
         'admins' => AdminController::class,
         'categories' => CategoryController::class,
         'languages' => LanguageController::class,
+        'brands' => BrandController::class,
+
 
     ]);
 
