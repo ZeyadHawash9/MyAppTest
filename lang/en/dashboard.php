@@ -45,6 +45,14 @@ return [
     'categories show' => 'Categories Show',
 
 
+    'brand' => 'Brand',
+    'brands' => 'Brands',
+    'brands list' => 'Brands List',
+    'brands create' => 'brands Create',
+    'brands edit' => 'Brands Edit',
+    'brands show' => 'Brands Show',
+
+
 
 
 

@@ -85,7 +85,7 @@ class BrandEloquent implements Repository
         $brand->save();
 
 
-        return redirect()->route(dashboard() . '.categories.index')->with('message', __('Category Update successfully!'));
+        return redirect()->route(dashboard() . '.brands.index')->with('message', __('Category Update successfully!'));
 
 
     }
