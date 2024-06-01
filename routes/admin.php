@@ -7,6 +7,11 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\BrandController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\LanguageController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
+
+
+Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard','as'=>'dashboard.'], function () {
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::get('/', function () {
@@ -57,3 +62,5 @@ Route::group(['middleware' => 'auth:admin'], function () {
 Route::get('/login',[AdminLoginController::class,'showLoginForm'])->name('admin.login');
 Route::post('/login', [AdminLoginController::class,'login'])->name('admin.login.submit');
 
+
+});

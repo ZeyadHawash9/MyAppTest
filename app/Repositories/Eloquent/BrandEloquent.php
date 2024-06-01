@@ -6,6 +6,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Admin;
 use App\Models\Brand;
 use App\Repositories\Interfaces\Repository;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class BrandEloquent implements Repository
@@ -58,41 +59,67 @@ class BrandEloquent implements Repository
     }
     function create(array $attributes)
     {
-
-        $brand = new Brand();
-        $brand->name = $attributes['name'];
-        $brand->description = $attributes['description'];
-       $brand->image = isset( $attributes['image']) ? storePhoto('brands',  $attributes['image']) : '';
-        $brand->save();
-
-
-        return redirect()->route(dashboard() . '.brands.index')->with('message', __('category created successfully!'));
+        try {
+            DB::beginTransaction();
+            $brand = new Brand();
+            $brand->name = $attributes['name'];
+            $brand->description = $attributes['description'];
+            $brand->image = isset($attributes['image']) ? storePhoto('brands',  $attributes['image']) : '';
+            $brand->save();
+            DB::commit();
+            return redirect()->route(dashboard() . '.brands.index')->with('message', __('category created successfully!'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+            // return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+        }
     }
 
     function changeStatus($id)
     {
-        $brand = Brand::find($id);
-        $brand->is_active = !($brand->is_active);
-        $brand->save();
-        return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('brand status updated successfully')]);
+        try {
+            DB::beginTransaction();
+            $brand = Brand::find($id);
+            $brand->is_active = !($brand->is_active);
+            $brand->save();
+            DB::commit();
+            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('brand status updated successfully')]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+        }
     }
     function update(array $attributes, $id = null)
     {
-        $brand = Brand::find($id);
-        $brand->name = $attributes['name'];
-        $brand->description = $attributes['description'];
-       $brand->image = isset( $attributes['image']) ? storePhoto('brands',  $attributes['image']) : '';
-        $brand->save();
+        try {
+            DB::beginTransaction();
+            $brand = Brand::find($id);
+            $brand->name = $attributes['name'];
+            $brand->description = $attributes['description'];
+            if (isset($attributes['image'])) {
+                $brand->image =  storePhoto('brands',  $attributes['image']);
+            }
+            $brand->save();
 
 
-        return redirect()->route(dashboard() . '.brands.index')->with('message', __('Category Update successfully!'));
-
-
+            DB::commit();
+            return redirect()->route(dashboard() . '.brands.index')->with('message', __('Category Update successfully!'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+        }
     }
     function delete($id)
     {
-        $brand = Brand::find($id);
-        $brand->delete();
-        return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('brand Destroy successfully!')]);
+        try {
+            DB::beginTransaction();
+            $brand = Brand::find($id);
+            $brand->delete();
+            DB::commit();
+            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('brand Destroy successfully!')]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+        }
     }
 }
