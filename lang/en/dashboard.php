@@ -53,6 +53,16 @@ return [
     'brands show' => 'Brands Show',
 
 
+'role' => 'Role',
+    'roles' => 'Roles',
+    'roles list' => 'Roles List',
+    'roles create' => 'Roles Create',
+    'roles edit' => 'Roles Edit',
+    'roles show' => 'Roles Show',
+'guard_name'=>'Guard Name'
+
+
+
 
 
 
