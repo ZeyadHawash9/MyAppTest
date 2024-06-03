@@ -34,10 +34,10 @@ return [
     'languages create' => 'languages create',
     'languages edit' => 'languages edit',
     'languages show' => 'languages show',
-    'iso'=>'Iso',
-    'dir'=>'dir',
-    'description'=>'description',
-    'parent'=>'Parent',
+    'iso' => 'Iso',
+    'dir' => 'dir',
+    'description' => 'description',
+    'parent' => 'Parent',
     'categories' => 'Categories',
     'categories list' => 'Categories List',
     'categories create' => 'Categories Create',
@@ -53,13 +53,21 @@ return [
     'brands show' => 'Brands Show',
 
 
-'role' => 'Role',
+    'role' => 'Role',
     'roles' => 'Roles',
     'roles list' => 'Roles List',
     'roles create' => 'Roles Create',
     'roles edit' => 'Roles Edit',
     'roles show' => 'Roles Show',
-'guard_name'=>'Guard Name'
+    'guard_name' => 'Guard Name',
+
+
+    'permission' => 'Permission',
+    'permissions' => 'Permissions',
+    'permissions list' => 'Permissions List',
+    'permissions create' => 'Permissions Create',
+    'permissions edit' => 'Permissions Edit',
+    'permissions show' => 'Permissions Show',
 
 
 

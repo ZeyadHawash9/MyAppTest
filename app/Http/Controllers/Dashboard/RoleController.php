@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Brand\CreateBrandRequest;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
-use App\Models\Role;
 use App\Models\Language;
+use App\Models\Permission;
 use App\Repositories\Eloquent\RoleEloquent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -41,6 +43,9 @@ class RoleController extends Controller
     public function create()
     {
 
+        $guards = array_keys(Config::get('auth.guards'));
+        $Permissions = Permission::all();
+
         $links = [
             '#' => __('dashboard.roles'),
             route('dashboard.roles.index') => __('dashboard.roles list'),
@@ -51,6 +56,9 @@ class RoleController extends Controller
         $data = [
             'page_title' => __('dashboard.roles create'),
             'links' => $links,
+            'guards' => $guards,
+            'Permissions' => $Permissions,
+
         ];
         return view(dashboard() . '.roles.create', $data);
     }
@@ -58,17 +66,13 @@ class RoleController extends Controller
     public function store(CreateRoleRequest $request)
     {
         return $this->role->create($request->all());
-
     }
-    public function changeStatus(Role $role)
-    {
 
-        return $this->role->changeStatus($role->id);
-    }
 
 
     public function show(Role $role)
     {
+
         $links = [
             '#' => __('dashboard.roles'),
             route('dashboard.roles.index') => __('dashboard.roles list'),
@@ -81,14 +85,17 @@ class RoleController extends Controller
             'links' => $links,
             'role' => $role,
 
+
+
         ];
         return view(dashboard() . '.roles.show', $data);
     }
 
     public function edit(Role $role)
     {
-        $languages = Language::all();
 
+        $guards = array_keys(Config::get('auth.guards'));
+        $Permissions = Permission::all();
         $links = [
             '#' => __('dashboard.roles'),
             route('dashboard.roles.index') => __('dashboard.roles list'),
@@ -100,7 +107,11 @@ class RoleController extends Controller
             'page_title' => __('dashboard.roles edit'),
             'links' => $links,
             'role' => $role,
-            'languages' => $languages,
+            'guards' => $guards,
+            'Permissions' => $Permissions,
+            'rolePermissions' => $role->permissions->pluck('name')->toArray(),
+
+
         ];
         return view(dashboard() . '.roles.create', $data);
     }
@@ -108,9 +119,7 @@ class RoleController extends Controller
 
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        return $this->role->update($request->all(),$role->id);
-
-
+        return $this->role->update($request->all(), $role->id);
     }
 
     public function destroy(Role $role)

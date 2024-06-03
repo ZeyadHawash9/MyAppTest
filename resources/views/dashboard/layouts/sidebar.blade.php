@@ -134,7 +134,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link"  href="{{ route('dashboard.roles.index') }}"
+                        <a class="menu-link"  href="{{ route('dashboard.permissions.index') }}"
                             title="Check out the complete documentation" data-bs-toggle="tooltip"
                             data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                             <span class="menu-icon">

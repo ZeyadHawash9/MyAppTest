@@ -5,9 +5,10 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Admin;
 use App\Models\Brand;
-use App\Models\Role;
 use App\Repositories\Interfaces\Repository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 class RoleEloquent implements Repository
@@ -54,12 +55,11 @@ class RoleEloquent implements Repository
     }
     function create(array $attributes)
     {
+
         try {
             DB::beginTransaction();
-            $role = new Role();
-            $role->name = $attributes['name'];
-            $role->guard_name = $attributes['guard_name'];
-            $role->save();
+            $role = Role::create(['guard_name' =>  $attributes['guard_name'], 'name' => $attributes['name']]);
+            if (!empty($attributes['permissions'])) $role->givePermissionTo($attributes['permissions']);
             DB::commit();
             return redirect()->route(dashboard() . '.roles.index')->with('message', __('role created successfully!'));
         } catch (\Exception $e) {
@@ -68,43 +68,30 @@ class RoleEloquent implements Repository
         }
     }
 
-    function changeStatus($id)
-    {
-        try {
-            DB::beginTransaction();
-            $role = Brand::find($id);
-            $role->is_active = !($role->is_active);
-            $role->save();
-            DB::commit();
-            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('role status updated successfully')]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
-        }
-    }
+
     function update(array $attributes, $id = null)
     {
-
         try {
             DB::beginTransaction();
-            $role = Role::find($id);
+            $role = Role::findById($id);
             $role->name = $attributes['name'];
             $role->guard_name = $attributes['guard_name'];
+            if (!empty($attributes['permissions'])) $role->givePermissionTo($attributes['permissions']);
             $role->save();
 
-
+            $role->save();
             DB::commit();
             return redirect()->route(dashboard() . '.roles.index')->with('message', __('role Update successfully!'));
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
     function delete($id)
     {
         try {
             DB::beginTransaction();
-            $role = role::find($id);
+            $role = Role::find($id);
             $role->delete();
             DB::commit();
             return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('role Destroy successfully!')]);

@@ -22,20 +22,50 @@
                                             @endif
 
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.name') }}</label>
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.name') }}</label>
                                                 <input type="text" name="name"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Name" value="{{ $role->name ?? old('name') }}" />
+                                                    class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Name"
+                                                    value="{{ $role->name ?? old('name') }}" />
+                                            </div>
+
+                                            <div class="fv-row mb-7">
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.guard_name') }}</label>
+
+                                                <select name="guard_name" class="form-select form-select-solid"
+                                                    data-control="select2" data-hide-search="true"
+                                                    value="{{ $admin->dir ?? old('dir') }}">
+                                                    @foreach ($guards as $key => $guard)
+
+                                                    <option value="{{ $guard }}" {{ $role?->guard_name == $guard ? 'selected' : '' }}>
+                                                        {{ $guard }}
+                                                    </option>
+                                                    @endforeach
+
+
+                                                </select>
+
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.guard_name') }}</label>
-                                                <input type="text" name="guard_name"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Guard Name"
-                                                    value="{{ $role->guard_name ?? old('guard_name') }}" />
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.permissions') }}</label>
+                                                <select name='permissions[]' class="form-select mb-2" data-control="select2"
+                                                    data-placeholder="Select an option" data-allow-clear="true"
+                                                    multiple="multiple">
+                                                    <option></option>
+                                                    @foreach ($Permissions as $Permission)
+                                                    <option value="{{ $Permission->name }}" @if(in_array($Permission->name, $rolePermissions)) selected @endif>
+                                                        {{ $Permission->name }}
+                                                    </option>
+                                                    @endforeach
+
+                                                </select>
+
                                             </div>
                                             <div class="text-center pt-15">
-                                                <a href="{{ route('dashboard.roles.index') }}" class="btn btn-light me-3">{{ __('dashboard.discard') }}</a>
+                                                <a href="{{ route('dashboard.roles.index') }}"
+                                                    class="btn btn-light me-3">{{ __('dashboard.discard') }}</a>
 
                                                 <button type="submit" class="btn btn-primary"
                                                     data-kt-users-modal-action="submit">
@@ -44,6 +74,7 @@
                                                             class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                 </button>
                                             </div>
+
                                         </form>
                                     </div>
                                 </div>

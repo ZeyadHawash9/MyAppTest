@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\BrandController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\LanguageController;
+use App\Http\Controllers\Dashboard\PermissionController;
 use App\Http\Controllers\Dashboard\RoleController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -45,8 +46,14 @@ Route::group(['middleware' => 'auth:admin'], function () {
     });
 
     Route::group(['prefix' => 'roles','as'=>'roles.'], function () {
-        Route::post('/{brand}/active', [RoleController::class, 'changeStatus'])->name('status');
+        Route::post('/{role}/active', [RoleController::class, 'changeStatus'])->name('status');
         Route::get('/any-data', [RoleController::class, 'anyData'])->name('anyData');
+
+    });
+
+    Route::group(['prefix' => 'permissions','as'=>'permissions.'], function () {
+        Route::post('/{permission}/active', [PermissionController::class, 'changeStatus'])->name('status');
+        Route::get('/any-data', [PermissionController::class, 'anyData'])->name('anyData');
 
     });
     Route::resources([
@@ -55,6 +62,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
         'languages' => LanguageController::class,
         'brands' => BrandController::class,
         'roles' => RoleController::class,
+        'permissions' => PermissionController::class,
 
 
     ]);
