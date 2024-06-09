@@ -36,11 +36,11 @@
                                                 @foreach ($Permissions as $Permission)
                                                     <div class="form-check mt-3">
                                                         <input class="form-check-input" type="checkbox" name="permissions[]"
-                                                            value="{{ $Permission->name }}" id="flexCheckDefault"
+                                                            value="{{ $Permission->name }}" id="{{ $Permission->name }}"
                                                             @isset($rolePermissions)
                                                           @if (in_array($Permission->name, $rolePermissions)) checked @endif
                                                           @endisset>
-                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                        <label class="form-check-label" for="{{ $Permission->name }}">
                                                             {{ $Permission->name }}
                                                         </label>
                                                     </div>

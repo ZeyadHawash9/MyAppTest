@@ -88,6 +88,7 @@ class RoleEloquent implements Repository
             $role = Role::findById($id);
             $role->name = $attributes['name'];
             if (!empty($attributes['permissions'])) $role->syncPermissions($attributes['permissions']);
+            else $role->syncPermissions([]);
             $role->save();
 
             $role->save();
