@@ -22,11 +22,10 @@ class CreateRoleRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'guard_name' => 'required|string|max:255',
 
         ];
     }
-     /**
+    /**
      * Get custom messages for validator errors.
      *
      * @return array
@@ -34,12 +33,10 @@ class CreateRoleRequest extends FormRequest
     public function messages(): array
     {
         return [
-          'name.required' => 'The name field is required.',
+            'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
             'name.max' => 'The name may not be greater than :max characters.',
-            'guard_name.required' => 'The guard name field is required.',
-            'guard_name.string' => 'The guard name must be a string.',
-            'guard_name.max' => 'The guard name may not be greater than :max characters.',
-            ];
+
+        ];
     }
 }

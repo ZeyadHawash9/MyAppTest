@@ -16,11 +16,7 @@
                                                 {{ __('dashboard.name') }}: {{ $permission->name }}</h2>
 
                                         </div>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <h2 class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">
-                                                {{ __('dashboard.guard_name') }}: {{ $permission->guard_name }}</h2>
 
-                                        </div>
 
 
                                     </div>

@@ -15,15 +15,23 @@
                                             <h2 class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">
                                                 {{ __('dashboard.name') }}: {{ $role->name }}</h2>
 
-                                        </div>
-                                        <div class="d-flex align-items-center mb-2">
-                                            <h2 class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">
-                                                {{ __('dashboard.guard_name') }}: {{ $role->guard_name }}</h2>
 
                                         </div>
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="fv-row mb-7">
+                                <label
+                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.permissions') }}</label>
+                                @foreach ($rolePermissions as $Permission)
+                                    <div class="form-check mt-3">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            {{ $Permission }}
+                                        </label>
+                                    </div>
+                                @endforeach
+
                             </div>
                         </div>
                     </div>

@@ -54,8 +54,7 @@ class PermissionEloquent implements Repository
     {
         try {
             DB::beginTransaction();
-            $permission = Permission::create(['guard_name' => 'admin', 'name' => 'publish articles']);
-
+             Permission::create(['name' => $attributes['name']]);
             DB::commit();
             return redirect()->route(dashboard() . '.permissions.index')->with('message', __('Permission created successfully!'));
         } catch (\Exception $e) {
@@ -85,7 +84,6 @@ class PermissionEloquent implements Repository
             DB::beginTransaction();
             $Permission = Permission::find($id);
             $Permission->name = $attributes['name'];
-            $Permission->guard_name = $attributes['guard_name'];
             $Permission->save();
 
 

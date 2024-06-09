@@ -7,10 +7,10 @@ use App\Http\Requests\Brand\CreateBrandRequest;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Models\Language;
-use App\Models\Permission;
 use App\Repositories\Eloquent\RoleEloquent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -43,6 +43,7 @@ class RoleController extends Controller
     public function create()
     {
 
+
         $guards = array_keys(Config::get('auth.guards'));
         $Permissions = Permission::all();
 
@@ -69,6 +70,12 @@ class RoleController extends Controller
     }
 
 
+    public function changeStatus(Role $role)
+    {
+
+        return $this->role->changeStatus($role->id);
+    }
+
 
     public function show(Role $role)
     {
@@ -84,6 +91,8 @@ class RoleController extends Controller
             'page_title' => __('dashboard.roles show'),
             'links' => $links,
             'role' => $role,
+            'rolePermissions' => $role->permissions->pluck('name')->toArray(),
+
 
 
 
@@ -102,7 +111,6 @@ class RoleController extends Controller
             route('dashboard.roles.edit', $role) => __('dashboard.roles edit'),
 
         ];
-
         $data = [
             'page_title' => __('dashboard.roles edit'),
             'links' => $links,
@@ -124,6 +132,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+
         return $this->role->delete($role->id);
     }
 }

@@ -27,13 +27,7 @@
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="Name" value="{{ $permission->name ?? old('name') }}" />
                                             </div>
-                                            <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.guard_name') }}</label>
-                                                <input type="text" name="guard_name"
-                                                    class="form-control form-control-solid mb-3 mb-lg-0"
-                                                    placeholder="Guard Name"
-                                                    value="{{ $permission->guard_name ?? old('guard_name') }}" />
-                                            </div>
+
                                             <div class="text-center pt-15">
                                                 <a href="{{ route('dashboard.permissions.index') }}" class="btn btn-light me-3">{{ __('dashboard.discard') }}</a>
 

@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Dashboard;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Permission\CreatePermissionRequest;
 use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Http\Requests\Role\CreateRoleRequest;
-use App\Models\Role;
 use App\Models\Language;
-use App\Models\Permission;
 use App\Repositories\Eloquent\PermissionEloquent;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -56,7 +56,7 @@ class PermissionController extends Controller
         return view(dashboard() . '.permissions.create', $data);
     }
 
-    public function store(CreateRoleRequest $request)
+    public function store(CreatePermissionRequest $request)
     {
         return $this->Permission->create($request->all());
 

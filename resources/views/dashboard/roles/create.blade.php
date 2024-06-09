@@ -29,38 +29,22 @@
                                                     value="{{ $role->name ?? old('name') }}" />
                                             </div>
 
-                                            <div class="fv-row mb-7">
-                                                <label
-                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.guard_name') }}</label>
 
-                                                <select name="guard_name" class="form-select form-select-solid"
-                                                    data-control="select2" data-hide-search="true"
-                                                    value="{{ $admin->dir ?? old('dir') }}">
-                                                    @foreach ($guards as $key => $guard)
-
-                                                    <option value="{{ $guard }}" {{ $role?->guard_name == $guard ? 'selected' : '' }}>
-                                                        {{ $guard }}
-                                                    </option>
-                                                    @endforeach
-
-
-                                                </select>
-
-                                            </div>
                                             <div class="fv-row mb-7">
                                                 <label
                                                     class="required fw-semibold fs-6 mb-2">{{ __('dashboard.permissions') }}</label>
-                                                <select name='permissions[]' class="form-select mb-2" data-control="select2"
-                                                    data-placeholder="Select an option" data-allow-clear="true"
-                                                    multiple="multiple">
-                                                    <option></option>
-                                                    @foreach ($Permissions as $Permission)
-                                                    <option value="{{ $Permission->name }}" @if(in_array($Permission->name, $rolePermissions)) selected @endif>
-                                                        {{ $Permission->name }}
-                                                    </option>
-                                                    @endforeach
-
-                                                </select>
+                                                @foreach ($Permissions as $Permission)
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input" type="checkbox" name="permissions[]"
+                                                            value="{{ $Permission->name }}" id="flexCheckDefault"
+                                                            @isset($rolePermissions)
+                                                          @if (in_array($Permission->name, $rolePermissions)) checked @endif
+                                                          @endisset>
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            {{ $Permission->name }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
 
                                             </div>
                                             <div class="text-center pt-15">

@@ -19,7 +19,7 @@
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th title="Field #1">#</th>
                                     <th class="text-center">{{ __('dashboard.name') }}</th>
-                                    <th class="text-center">{{ __('dashboard.guard_name') }}</th>
+                                    <th class="text-center">{{ __('dashboard.active') }}</th>
                                     <th class="text-center">{{ __('dashboard.actions') }}</th>
                                 </tr>
                             </thead>
@@ -50,8 +50,8 @@
                             name: 'name'
                         },
                         {
-                            data: 'guard_name',
-                            name: 'guard_name'
+                            data: 'active',
+                            name: 'active'
                         },
                         {
                             data: 'action',
@@ -65,7 +65,7 @@
                     var _this = $(this);
                     event.preventDefault();
                     var action = $(this).attr('href');
-                    var role_name = _this.closest('tr').find("td:eq(2)").text();
+                    var role_name = _this.closest('tr').find("td:eq(1)").text();
                     bootbox.confirm({
                         message: " {!! __('dashboard.delete_msg') !!} (" + role_name + ") ?",
                         buttons: {
@@ -107,7 +107,7 @@
                 $('#table_role').on('change', '.make-switch.active', function(event, state) {
                     var admin_id = $(this).data('id');
                     $.ajax({
-                        url: `/en/dashboard/brands/${admin_id}/active`,
+                        url: `/en/dashboard/roles/${admin_id}/active`,
                         type: 'post',
                         dataType: 'json',
                         data: {
