@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Observers\CategoryObserver;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        View::composer('*', function ($view) {
+            $locale = config('app.locale');
+            $view->with([
+                'locale' => $locale,
+            ]);
+        });
     }
 
     /**
@@ -19,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Category::observe(CategoryObserver::class);
+
     }
 }

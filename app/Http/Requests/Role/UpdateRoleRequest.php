@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Brand;
+namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBrandRequest extends FormRequest
+class UpdateRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,6 @@ class CreateBrandRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,26 +20,22 @@ class CreateBrandRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
-            'image' => 'image|mimes:png,jpg,jpeg|max:2048',
             'name' => 'required|string|max:255',
-            'description.*' => 'required',
 
         ];
     }
-
+     /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages(): array
     {
         return [
-            'image.image' => 'The image must be an image.',
-            'image.mimes' => 'The image must be a file of type: :values.',
-            'image.max' => 'The image may not be greater than :max kilobytes.',
-            'name.required' => 'The name field is required.',
+          'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
             'name.max' => 'The name may not be greater than :max characters.',
-            'description.required' => 'The description field is required.',
-            'description.string' => 'The description must be a string.',
-        ];
+            ];
     }
 }

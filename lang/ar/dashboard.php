@@ -24,4 +24,10 @@ return [
     'change' => 'تغيير',
     'confirm' => 'تأكيد',
     'delete_msg' => 'هل أنت متأكد أنك تريد حذف العنصر',
+    'roles create' => 'إنشاء مشرف',
+    'roles show' => 'عرض مشرف',
+    'roles edit' => 'تحرير مشرف',
+    'roles' => 'المشرفون',
+    'roles list' => 'قائمة المشرفين',
+
 ];

@@ -49,7 +49,9 @@
         </div>
     </div>
     @include('dashboard.layouts.js')
+
     @yield('js')
+
 </body>
 
 </html>

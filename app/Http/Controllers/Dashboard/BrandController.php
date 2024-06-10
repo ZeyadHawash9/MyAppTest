@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Brand\CreateBrandRequest;
 use App\Models\Brand;
 use App\Models\Language;
 use App\Repositories\Eloquent\BrandEloquent;
@@ -55,7 +56,7 @@ class BrandController extends Controller
         return view(dashboard() . '.brands.create', $data);
     }
 
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request)
     {
         return $this->brand->create($request->all());
 
