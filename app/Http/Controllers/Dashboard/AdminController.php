@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\Storage;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\Facades\DataTables;
 use \Illuminate\Support\Str;
+use App\Models\Role;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:index brand')->only('index');
+        $this->middleware('permission:create brand')->only('create');
+        $this->middleware('permission:show brand')->only('show');
+        $this->middleware('permission:update brand')->only(['update', 'changeStatus']);
+        $this->middleware('permission:delete brand')->only('destroy');
+    }
 
 
     public function anyData(Request $request)
@@ -24,6 +34,14 @@ class AdminController extends Controller
 
             ->editColumn('image', function ($Admin) {
                 return '<img src="' . $Admin->image . '"  width="80px" height="80px" class="rounded-circle">';
+            })
+            ->addColumn('role', function ($Admin) {
+                $roles = $Admin->getRoleNames();
+                $RoleNames = '';
+                foreach ($roles as  $role) {
+                    $RoleNames .= '<p>' . $role . '</p>';
+                }
+                return $RoleNames;
             })
             ->addColumn('action', function ($row) {
                 $btn = '';
@@ -39,7 +57,7 @@ class AdminController extends Controller
 
                 return '
                 <div class="col-md-9">
-                    <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                    <div class="form-check form-switch form-check-custom form-check-solid ">
                         <form target="_self" id="FormToggleSubmit" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
                             <input type="hidden" name="url" value="' . route('dashboard.admins.status', $row) . '">
                             <input type="hidden" name="id" value="' . $row->id . '">
@@ -49,7 +67,7 @@ class AdminController extends Controller
                         </form>
                     </div>
                 </div>';
-            })->addIndexColumn()->rawColumns(['action', 'image', 'active'])->toJson();
+            })->addIndexColumn()->rawColumns(['action', 'image', 'active', 'role'])->toJson();
     }
     public function index()
     {
@@ -70,6 +88,7 @@ class AdminController extends Controller
     public function create()
     {
 
+        $roles = Role::all();
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.admins.index') => __('dashboard.admins list'),
@@ -79,7 +98,9 @@ class AdminController extends Controller
 
         $data = [
             'page_title' => __('dashboard.admins create'),
-            'links' => $links
+            'links' => $links,
+            'roles' => $roles
+
         ];
         return view(dashboard() . '.admins.create', $data);
     }
@@ -88,6 +109,7 @@ class AdminController extends Controller
 
     public function store(AdminCreateRequest $request)
     {
+
         $admin = new Admin();
         $admin->name = $request->name;
         $admin->user_name = $request->user_name;
@@ -96,6 +118,8 @@ class AdminController extends Controller
         $admin->password = bcrypt($request->password);
         $admin->image = isset($request->image) ? storePhoto('admins', $request->image) : '';
         $admin->save();
+        $admin->assignRole($request->roles);
+
 
 
 
@@ -111,6 +135,7 @@ class AdminController extends Controller
 
     public function show(Admin $admin)
     {
+
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.admins.index') => __('dashboard.admins list'),
@@ -129,6 +154,10 @@ class AdminController extends Controller
 
     public function edit(Admin $admin)
     {
+        $roles = Role::all();
+        $adminRoles = $admin->getRoleNames();
+
+
         $links = [
             '#' => __('dashboard.admins'),
             route('dashboard.admins.index') => __('dashboard.admins list'),
@@ -139,7 +168,9 @@ class AdminController extends Controller
         $data = [
             'page_title' => __('dashboard.admins edit'),
             'links' => $links,
-            'admin' => $admin
+            'admin' => $admin,
+            'roles' => $roles,
+            'adminRoles' => $adminRoles,
         ];
         return view(dashboard() . '.admins.create', $data);
     }
@@ -155,6 +186,7 @@ class AdminController extends Controller
         $admin->email = $request->input('email', $admin->email);
         $admin->password = $request->filled('password') ? bcrypt($request->password) : $admin->password;
         $admin->image = $request->hasFile('image') ? storePhoto('admins', $request->file('image')) : $admin->image;
+        $admin->syncRoles($request->roles);
         $admin->save();
 
 

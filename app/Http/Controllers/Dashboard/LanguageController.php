@@ -13,7 +13,14 @@ use Yajra\DataTables\Facades\DataTables;
 class LanguageController extends Controller
 {
 
-
+    public function __construct()
+    {
+        $this->middleware('permission:index languages')->only('index');
+        $this->middleware('permission:create languages')->only('create');
+        $this->middleware('permission:show languages')->only('show');
+        $this->middleware('permission:update languages')->only(['update', 'changeStatus']);
+        $this->middleware('permission:delete languages')->only('destroy');
+    }
 
     public function anyData(Request $request)
     {
@@ -38,7 +45,7 @@ class LanguageController extends Controller
 
                 return '
                 <div class="col-md-9">
-                    <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                    <div class="form-check form-switch form-check-custom form-check-solid  ">
                         <form target="_self" id="FormToggleSubmit" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
                             <input type="hidden" name="url" value="' . route('dashboard.languages.status', $Language) . '">
                             <input type="hidden" name="id" value="' . $Language->id . '">
@@ -100,7 +107,7 @@ class LanguageController extends Controller
         return redirect()->route(dashboard() . '.languages.index')->with('message', __('language created successfully!'));
     }
 
-    public function changeStatus( Language $language)
+    public function changeStatus(Language $language)
     {
         $language->is_active = !($language->is_active);
         $language->save();

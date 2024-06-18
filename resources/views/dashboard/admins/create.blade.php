@@ -21,7 +21,8 @@
                                                 @method('PUT')
                                             @endif
                                             <div class="fv-row mb-7">
-                                                <label class="d-block fw-semibold fs-6 mb-5">{{ __('dashboard.image') }}</label>
+                                                <label
+                                                    class="d-block fw-semibold fs-6 mb-5">{{ __('dashboard.image') }}</label>
                                                 <div class="image-input image-input-outline image-input-placeholder"
                                                     data-kt-image-input="true">
                                                     <div class="image-input-wrapper w-125px h-125px"
@@ -50,40 +51,66 @@
                                                 </div>
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.name') }}</label>
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.name') }}</label>
                                                 <input type="text" name="name"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="Full name" value="{{ $admin->name ?? old('name') }}" />
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.user name') }}</label>
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.user name') }}</label>
                                                 <input type="text" name="user_name"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="User Name"
                                                     value="{{ $admin->user_name ?? old('user_name') }}" />
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.phone number') }}</label>
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.phone number') }}</label>
                                                 <input type="text" name="phone_number"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="Phone Number"
                                                     value="{{ $admin->phone_number ?? old('phone_number') }}" />
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.email') }}</label>
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.email') }}</label>
                                                 <input type="email" name="email"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="example@domain.com"
                                                     value="{{ $admin->email ?? old('email') }}" />
                                             </div>
                                             <div class="fv-row mb-7">
-                                                <label class="required fw-semibold fs-6 mb-2">{{ __('dashboard.password') }}</label>
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.password') }}</label>
                                                 <input type="password" name="password"
                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                     placeholder="password" value="" />
                                             </div>
+
+                                            <div class="fv-row mb-7">
+                                                <label
+                                                    class="required fw-semibold fs-6 mb-2">{{ __('dashboard.roles') }}</label>
+                                                @foreach ($roles as $role)
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input" type="checkbox" name="roles[]"
+                                                            value="{{ $role->name }}" id="{{ $role->name }}"
+                                                            @isset($adminRoles)
+                                                          @if (in_array($role->name, $adminRoles->toArray())) checked @endif
+                                                          @endisset>
+                                                        <label class="form-check-label" for="{{ $role->name }}">
+                                                            {{ $role->name }}
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+
+                                            </div>
+
+
                                             <div class="text-center pt-15">
-                                                <a href="{{ route('dashboard.admins.index') }}" class="btn btn-light me-3">{{ __('dashboard.discard') }}</a>
+                                                <a href="{{ route('dashboard.admins.index') }}"
+                                                    class="btn btn-light me-3">{{ __('dashboard.discard') }}</a>
 
                                                 <button type="submit" class="btn btn-primary"
                                                     data-kt-users-modal-action="submit">
@@ -92,6 +119,7 @@
                                                             class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                 </button>
                                             </div>
+
                                         </form>
                                     </div>
                                 </div>

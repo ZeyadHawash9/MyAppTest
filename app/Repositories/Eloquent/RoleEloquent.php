@@ -8,7 +8,7 @@ use App\Models\Brand;
 use App\Repositories\Interfaces\Repository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 class RoleEloquent implements Repository
@@ -33,7 +33,7 @@ class RoleEloquent implements Repository
 
                 return '
                     <div class="col-md-9">
-                        <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                        <div class="form-check form-switch form-check-custom form-check-solid  ">
                             <form target="_self" id="FormToggleSubmit" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
                                 <input type="hidden" name="url" value="' . route('dashboard.roles.status', $row) . '">
                                 <input type="hidden" name="id" value="' . $row->id . '">
@@ -71,26 +71,24 @@ class RoleEloquent implements Repository
     {
         try {
             DB::beginTransaction();
-            $role = Role::find($id);
+            $role = Role::findOrFail($id);
             $role->is_active = !($role->is_active);
             $role->save();
             DB::commit();
-            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('role status updated successfully')]);
+            return response_api(true, 200, 'role status updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+            return response_api(false, 422, $e->getMessage());
         }
     }
     function update(array $attributes, $id = null)
     {
         try {
             DB::beginTransaction();
-            $role = Role::findById($id);
+            $role = Role::findOrFail($id);
             $role->name = $attributes['name'];
             if (!empty($attributes['permissions'])) $role->syncPermissions($attributes['permissions']);
             else $role->syncPermissions([]);
-            $role->save();
-
             $role->save();
             DB::commit();
             return redirect()->route(dashboard() . '.roles.index')->with('message', __('role Update successfully!'));
@@ -104,13 +102,13 @@ class RoleEloquent implements Repository
 
         try {
             DB::beginTransaction();
-            $role = Role::find($id);
+            $role = Role::findOrFail($id);
             $role->delete();
             DB::commit();
-            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('role Destroy successfully!')]);
+            return response_api(true, 200, 'role Destroy successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+            return response_api(false, 422, $e->getMessage());
         }
     }
 }

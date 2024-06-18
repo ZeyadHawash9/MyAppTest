@@ -27,6 +27,9 @@ class AdminCreateRequest extends FormRequest
             'phone_number' => 'required|string|max:255',
             'email' => 'required|email|unique:admins,email',
             'password' => 'required|string|min:8',
+            'roles' => 'required',
+
+
 
         ];
     }
@@ -38,9 +41,9 @@ class AdminCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'avatar.image' => 'The avatar must be an image.',
-            'avatar.mimes' => 'The avatar must be a file of type: :values.',
-            'avatar.max' => 'The avatar may not be greater than :max kilobytes.',
+            'image.image' => 'The image must be an image.',
+            'image.mimes' => 'The image must be a file of type: :values.',
+            'image.max' => 'The image may not be greater than :max kilobytes.',
             'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
             'name.max' => 'The name may not be greater than :max characters.',
@@ -56,6 +59,9 @@ class AdminCreateRequest extends FormRequest
             'password.required' => 'The password field is required.',
             'password.string' => 'The password must be a string.',
             'password.min' => 'The password must be at least :min characters.',
+            'roles.required' => 'The roles  is required.',
+
+
         ];
     }
 }
