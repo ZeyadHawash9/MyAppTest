@@ -10,8 +10,8 @@ use App\Models\Language;
 use App\Repositories\Eloquent\RoleEloquent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 class RoleController extends Controller
 {
@@ -20,6 +20,12 @@ class RoleController extends Controller
     public function __construct(RoleEloquent $RoleEloquent)
     {
         $this->role = $RoleEloquent;
+        $this->middleware('permission:index role')->only('index');
+        $this->middleware('permission:create role')->only('create');
+        $this->middleware('permission:show role')->only('show');
+        $this->middleware('permission:update role')->only(['update','changeStatus']);
+        $this->middleware('permission:delete role')->only('destroy');
+
     }
 
     public function anyData()
@@ -44,7 +50,6 @@ class RoleController extends Controller
     {
 
 
-        $guards = array_keys(Config::get('auth.guards'));
         $Permissions = Permission::all();
 
         $links = [
@@ -57,7 +62,6 @@ class RoleController extends Controller
         $data = [
             'page_title' => __('dashboard.roles create'),
             'links' => $links,
-            'guards' => $guards,
             'Permissions' => $Permissions,
 
         ];

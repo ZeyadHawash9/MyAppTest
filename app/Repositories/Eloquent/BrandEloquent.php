@@ -37,7 +37,7 @@ class BrandEloquent implements Repository
 
                 return '
                     <div class="col-md-9">
-                        <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                        <div class="form-check form-switch form-check-custom form-check-solid  ">
                             <form target="_self" id="FormToggleSubmit" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
                                 <input type="hidden" name="url" value="' . route('dashboard.brands.status', $row) . '">
                                 <input type="hidden" name="id" value="' . $row->id . '">

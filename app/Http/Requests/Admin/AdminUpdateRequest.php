@@ -27,6 +27,7 @@ class AdminUpdateRequest extends FormRequest
             'user_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'roles' => 'required',
 
         ];
     }
@@ -56,6 +57,8 @@ class AdminUpdateRequest extends FormRequest
             'password.required' => 'The password field is required.',
             'password.string' => 'The password must be a string.',
             'password.min' => 'The password must be at least :min characters.',
+            'roles.required' => 'The roles  is required.',
+
         ];
     }
 }

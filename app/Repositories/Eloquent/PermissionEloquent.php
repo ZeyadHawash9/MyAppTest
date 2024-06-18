@@ -5,7 +5,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Repositories\Interfaces\Repository;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class PermissionEloquent implements Repository
@@ -27,19 +27,19 @@ class PermissionEloquent implements Repository
                 return $btn;
             })
             ->addColumn('active', function ($row) {
-
                 return '
-                    <div class="col-md-9">
-                        <div class="form-check form-switch form-check-custom form-check-solid me-10">
-                            <form target="_self" id="FormToggleSubmit" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
-                                <input type="hidden" name="url" value="' . route('dashboard.permissions.status', $row) . '">
-                                <input type="hidden" name="id" value="' . $row->id . '">
+                <div class="col-md-9">
+                    <div class="form-check form-switch form-check-custom form-check-solid">
+                        <form target="_self" id="FormToggleSubmit' . $row->id . '" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
+                            <input type="hidden" name="url" value="' . route('dashboard.permissions.status', $row) . '">
+                            <input type="hidden" name="id" value="' . $row->id . '">
 
-                                <input class="form-check-input h-30px w-50px make-switch active" name="autotimezone" type="checkbox" value=""
-                                data-id="' . $row->id . '"       id="autotimezone" ' . ($row->is_active == 1 ? 'checked' : '') . ' >
-                            </form>
-                        </div>
-                    </div>';
+                            <input class="form-check-input h-30px w-50px make-switch active" name="autotimezone" type="checkbox" value=""
+                            data-id="' . $row->id . '" id="autotimezone' . $row->id . '" ' . ($row->is_active == 1 ? 'checked' : '') . '>
+                        </form>
+                    </div>
+                </div>';
+
             })
             ->addIndexColumn()->rawColumns(['action', 'image', 'active'])->toJson();
     }
@@ -67,14 +67,14 @@ class PermissionEloquent implements Repository
     {
         try {
             DB::beginTransaction();
-            $Permission = Permission::find($id);
+            $Permission = Permission::findOrFail($id);
             $Permission->is_active = !($Permission->is_active);
             $Permission->save();
             DB::commit();
-            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Permission status updated successfully')]);
+            return response_api(true, 200, 'Permission status updated successfully');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+            return response_api(false, 422, $e->getMessage());
         }
     }
     function update(array $attributes, $id = null)
@@ -82,7 +82,7 @@ class PermissionEloquent implements Repository
 
         try {
             DB::beginTransaction();
-            $Permission = Permission::find($id);
+            $Permission = Permission::findOrFail($id);
             $Permission->name = $attributes['name'];
             $Permission->save();
 
@@ -91,20 +91,21 @@ class PermissionEloquent implements Repository
             return redirect()->route(dashboard() . '.permissions.index')->with('message', __('Permission Update successfully!'));
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+            return response_api(false, 422, $e->getMessage());
         }
     }
     function delete($id)
     {
         try {
             DB::beginTransaction();
-            $Permission = Permission::find($id);
+            $Permission = Permission::findOrFail($id);
             $Permission->delete();
             DB::commit();
-            return response()->json(['status' => true, 'statusCode' => 200, 'message' => __('Permission Destroy successfully!')]);
+            return response_api(true, 200, 'Permission Destroy successfully!');
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'statusCode' => 422, 'message' => $e->getMessage()], 422);
+            return response_api(false, 422, $e->getMessage());
         }
     }
 }

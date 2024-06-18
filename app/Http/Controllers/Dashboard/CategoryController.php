@@ -15,6 +15,14 @@ use Yajra\DataTables\Facades\DataTables;
 class CategoryController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:index category')->only('index');
+        $this->middleware('permission:create category')->only('create');
+        $this->middleware('permission:show category')->only('show');
+        $this->middleware('permission:update category')->only(['update', 'changeStatus']);
+        $this->middleware('permission:delete category')->only('destroy');
+    }
 
     public function anyData(Request $request)
     {
@@ -48,7 +56,7 @@ class CategoryController extends Controller
 
                 return '
                 <div class="col-md-9">
-                    <div class="form-check form-switch form-check-custom form-check-solid me-10">
+                    <div class="form-check form-switch form-check-custom form-check-solid  ">
                         <form target="_self" id="FormToggleSubmit" class="FormToggleSubmit container max-w-3xl mx-auto" enctype="multipart/form-data">
                             <input type="hidden" name="url" value="' . route('dashboard.categories.status', $Category) . '">
                             <input type="hidden" name="id" value="' . $Category->id . '">

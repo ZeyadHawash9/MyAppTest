@@ -22,10 +22,12 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'permissions' => 'required',
+
 
         ];
     }
-     /**
+    /**
      * Get custom messages for validator errors.
      *
      * @return array
@@ -33,9 +35,11 @@ class UpdateRoleRequest extends FormRequest
     public function messages(): array
     {
         return [
-          'name.required' => 'The name field is required.',
+            'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
             'name.max' => 'The name may not be greater than :max characters.',
-            ];
+            'permissions.required' => 'The permissions  is required.',
+
+        ];
     }
 }

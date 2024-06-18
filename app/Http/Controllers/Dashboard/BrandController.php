@@ -16,6 +16,12 @@ class BrandController extends Controller
     public function __construct(BrandEloquent $brandEloquent)
     {
         $this->brand = $brandEloquent;
+        $this->middleware('permission:index admin')->only('index');
+        $this->middleware('permission:create admin')->only('create');
+        $this->middleware('permission:show admin')->only('show');
+        $this->middleware('permission:update admin')->only(['update', 'changeStatus']);
+        $this->middleware('permission:delete admin')->only('destroy');
+
     }
 
     public function anyData()

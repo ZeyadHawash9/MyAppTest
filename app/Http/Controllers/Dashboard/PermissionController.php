@@ -10,15 +10,28 @@ use App\Http\Requests\Role\CreateRoleRequest;
 use App\Models\Language;
 use App\Repositories\Eloquent\PermissionEloquent;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
 
 class PermissionController extends Controller
 {
 
+
+
     private $Permission;
     public function __construct(PermissionEloquent $PermissionEloquent)
     {
+
         $this->Permission = $PermissionEloquent;
+        $this->middleware('permission:index permission')->only('index');
+        $this->middleware('permission:create permission')->only('create');
+        $this->middleware('permission:show permission')->only('show');
+        $this->middleware('permission:update permission')->only(['update','changeStatus']);
+        $this->middleware('permission:delete permission')->only('destroy');
+
+
+
+
+
     }
 
     public function anyData()
@@ -27,6 +40,7 @@ class PermissionController extends Controller
     }
     public function index()
     {
+
 
         $links = [
             '#' => __('dashboard.permissions'),

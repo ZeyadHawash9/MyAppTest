@@ -27,6 +27,7 @@
                                      <th class="text-center">{{ __('dashboard.user name') }}</th>
                                      <th class="text-center">{{ __('dashboard.phone number') }}</th>
                                      <th class="text-center">{{ __('dashboard.active') }}</th>
+                                     <th class="text-center">{{ __('dashboard.role') }}</th>
                                      <th class="text-center">{{ __('dashboard.actions') }}</th>
                                  </tr>
                              </thead>
@@ -37,7 +38,6 @@
          </div>
      </div>
  @endsection
-
  @section('js')
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 
@@ -70,6 +70,10 @@
                      {
                          data: 'active',
                          name: 'active'
+                     },
+                     {
+                         data: 'role',
+                         name: 'role'
                      },
                      {
                          data: 'action',
