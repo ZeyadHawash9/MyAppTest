@@ -38,8 +38,7 @@
                                             @endif
                                             <div class="fv-row mb-7">
                                                 <div class="tab-content">
-
-                                                    @foreach ($languages as $language)
+                                                    @forelse ($languages as $language)
                                                         <div class="tab-pane fade @if ($loop->first) active show @endif"
                                                             id="kt_security_summary_tab_pane_{{ $language->iso }}"
                                                             role="tabpanel">
@@ -66,11 +65,30 @@
                                                                     class="form-control form-control-solid mb-3 mb-lg-0"
                                                                     placeholder="description"
                                                                     value="{{ $category?->getTranslation('description', $language->iso) ?? old('description') }}" />
-                                                                <!--end::Input-->
                                                             </div>
                                                         </div>
-                                                        <!--end::Tab panel-->
-                                                    @endforeach
+                                                    @empty
+                                                        <div class=" ">
+
+                                                            <div class="fv-row mb-7">
+                                                                <label class="required fw-semibold fs-6 mb-2">Full Name
+                                                                </label>
+                                                                <input type="text" name="name[{{ $locale }}]"
+                                                                    class="form-control form-control-solid mb-3 mb-lg-0"
+                                                                    placeholder="Full name"
+                                                                    value="{{ $category?->getTranslation('name', $locale) ?? old('name') }}" />
+                                                            </div>
+                                                            <div class="fv-row mb-7">
+                                                                <label
+                                                                    class="required fw-semibold fs-6 mb-2">description</label>
+                                                                <input type="text"
+                                                                    name="description[{{ $locale }}]"
+                                                                    class="form-control form-control-solid mb-3 mb-lg-0"
+                                                                    placeholder="description"
+                                                                    value="{{ $category?->getTranslation('description', $locale) ?? old('description') }}" />
+                                                            </div>
+                                                        </div>
+                                                    @endforelse
                                                 </div>
 
                                                 <label
@@ -102,26 +120,25 @@
                                                     </span>
                                                 </div>
                                                 <div class="form-check mt-5">
-                                                    <input class="form-check-input" type="checkbox" id="toggleCheckbox">
+                                                    <input class="form-check-input" @if (isset($category->parent)) checked @endif type="checkbox" id="toggleCheckbox">
                                                     <label class="form-check-label" for="toggleCheckbox">
                                                         Is Child
                                                     </label>
                                                 </div>
 
-                                                <div id="toggleDiv" style="display: none;">
+                                                <div id="toggleDiv"  @if (! isset($category->parent)) style="display: none;" @endif >
                                                     <label
                                                         class="d-block fw-semibold fs-6 mb-5 mt-5">{{ __('dashboard.parent') }}</label>
                                                     <div class="fv-row mb-7">
 
                                                         <select name="parent" class="form-select form-select-solid"
                                                             data-control="select2" data-hide-search="true"
-                                                            data-placeholder="Year">
-                                                            <option selected
-                                                            value=''>
-                                                            Choose a  parent </option>
+                                                            data-placeholder="parent">
+                                                            <option selected value=''>
+                                                                Choose a parent </option>
                                                             @foreach ($categories as $categorySelect)
-                                                                @if (isset($Language))
-                                                                    @if ($category->id == $categorySelect->id)
+                                                                @if (isset($category->parent))
+                                                                    @if ($category->parent->id == $categorySelect->id)
                                                                         <option selected
                                                                             value=" {{ $categorySelect->id }}">
                                                                             {{ $categorySelect->name }}</option>
@@ -130,7 +147,7 @@
                                                                             {{ $categorySelect->name }}</option>
                                                                     @endif
                                                                 @else
-                                                                    <option value=" {{ $categorySelect->id }}">
+                                                                    <option value="{{ $categorySelect->id }}">
                                                                         {{ $categorySelect->name }}</option>
                                                                 @endif
                                                             @endforeach
