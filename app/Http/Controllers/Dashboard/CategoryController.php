@@ -91,14 +91,14 @@ class CategoryController extends Controller
 
 
         $links = [
-            '#' => __('dashboard.admins'),
-            route('dashboard.categories.index') => __('dashboard.admins list'),
-            route('dashboard.categories.create') => __('dashboard.admins create'),
+            '#' => __('dashboard.categories'),
+            route('dashboard.categories.index') => __('dashboard.categories list'),
+            route('dashboard.categories.create') => __('dashboard.categories create'),
 
         ];
 
         $data = [
-            'page_title' => __('dashboard.admins create'),
+            'page_title' => __('dashboard.categories create'),
             'links' => $links,
             'categories' => $categories,
             'languages' => $languages,
@@ -149,8 +149,10 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+
         $categories = Category::all();
         $languages = Language::all();
+
 
         $links = [
             '#' => __('dashboard.categories'),
